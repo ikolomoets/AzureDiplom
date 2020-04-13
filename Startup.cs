@@ -32,7 +32,7 @@ namespace Diplom
             });
 
             //Database
-            services.AddDbContext<diplomContext>(options =>
+            services.AddDbContext<DiplomDatabaseContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(Constants.DiplomDatabaseConnectionStringName))
                     .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 

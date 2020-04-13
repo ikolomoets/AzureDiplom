@@ -5,23 +5,24 @@ using Diplom.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Diplom.Models;
 
 namespace Diplom.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class GettingWeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<GettingWeatherForecastController> _logger;
         private readonly ITestingDataRepository _dataRepository;
 
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, ITestingDataRepository dataRepository)
+        public GettingWeatherForecastController(ILogger<GettingWeatherForecastController> logger, ITestingDataRepository dataRepository)
         {
             _logger = logger;
             _dataRepository = dataRepository;

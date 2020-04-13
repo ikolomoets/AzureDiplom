@@ -7,6 +7,6 @@ namespace Diplom
 {
     public struct Constants
     {
-        public const string DiplomDatabaseConnectionStringName = "diplomContext";
+        public const string DiplomDatabaseConnectionStringName = "DiplomDatabaseContext";
     }
 }

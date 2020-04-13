@@ -5,6 +5,10 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
 export function getBaseUrl() {
+  if (!environment.production) {
+    return "https://diplom20200410104007.azurewebsites.net/";
+  }
+
   return document.getElementsByTagName('base')[0].href;
 }
 
