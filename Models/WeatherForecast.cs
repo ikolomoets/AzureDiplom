@@ -1,6 +1,6 @@
 using System;
 
-namespace Diplom
+namespace Diplom.Models
 {
     public class WeatherForecast
     {

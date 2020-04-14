@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Diplom.Models
 {
-    public partial class diplomContext : DbContext
+    public partial class DiplomDatabaseContext : DbContext
     {
-        public diplomContext()
+        public DiplomDatabaseContext()
         {
         }
 
-        public diplomContext(DbContextOptions<diplomContext> options)
+        public DiplomDatabaseContext(DbContextOptions<DiplomDatabaseContext> options)
             : base(options)
         {
         }
@@ -22,8 +22,7 @@ namespace Diplom.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer(@"Server=tcp:diplomaserver.database.windows.net,1433;Initial Catalog=diplom;Persist Security Info=False;User ID=ikolomoets;Password=
-n*=77!&K:f49eJ73;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer("Server=tcp:diplomserv.database.windows.net,1433;Initial Catalog=DiplomDatabase;Persist Security Info=False;User ID=diplomadmin;Password=Dfyz12091999;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 

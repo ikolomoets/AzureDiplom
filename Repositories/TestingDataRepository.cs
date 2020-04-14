@@ -9,7 +9,7 @@ namespace Diplom.Repositories
 {
     public class TestingDataRepository : BaseRepository, ITestingDataRepository
     {
-        public TestingDataRepository(diplomContext context) : base(context) {  }
+        public TestingDataRepository(DiplomDatabaseContext context) : base(context) {  }
 
         public async Task<IEnumerable<TestData>> List()
         {
