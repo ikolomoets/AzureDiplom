@@ -5,7 +5,7 @@ using Diplom.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-using Diplom.Models;
+using Diplom.DataModels;
 
 namespace Diplom.Controllers
 {
@@ -19,10 +19,10 @@ namespace Diplom.Controllers
         };
 
         private readonly ILogger<GettingWeatherForecastController> _logger;
-        private readonly ITestingDataRepository _dataRepository;
+        private readonly IContextRepository _dataRepository;
 
 
-        public GettingWeatherForecastController(ILogger<GettingWeatherForecastController> logger, ITestingDataRepository dataRepository)
+        public GettingWeatherForecastController(ILogger<GettingWeatherForecastController> logger, IContextRepository dataRepository)
         {
             _logger = logger;
             _dataRepository = dataRepository;
@@ -31,7 +31,7 @@ namespace Diplom.Controllers
         [HttpGet]
         public async Task<IEnumerable<WeatherForecast>> GetAsync()
         {
-            var all = await _dataRepository.List();
+            var all = await _dataRepository.GetTestDataAsync();
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

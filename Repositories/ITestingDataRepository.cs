@@ -1,13 +1,11 @@
-﻿using Diplom.Models;
-using System;
+﻿using Diplom.DataModels;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Diplom.Repositories
 {
-    public interface ITestingDataRepository
+    public interface IContextRepository
     {
-        Task<IEnumerable<TestData>> List();
+        Task<IEnumerable<TestData>> GetTestDataAsync();
     }
 }

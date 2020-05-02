@@ -1,17 +1,17 @@
-﻿using Diplom.Models;
+﻿using Diplom.Data;
+using Diplom.DataModels;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Diplom.Repositories
 {
-    public class TestingDataRepository : BaseRepository, ITestingDataRepository
+    public class ContextRepository : BaseRepository, IContextRepository
     {
-        public TestingDataRepository(DiplomDatabaseContext context) : base(context) {  }
+        public ContextRepository(DiplomDatabaseContext context) : base(context) {  }
 
-        public async Task<IEnumerable<TestData>> List()
+        public async Task<IEnumerable<TestData>> GetTestDataAsync()
         {
             return await GetQuery().ToListAsync();
         }

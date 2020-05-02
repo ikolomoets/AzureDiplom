@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Diplom.Models
+namespace Diplom.DataModels
 {
-    public class TestData
+    public partial class TestData
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public int? Val { get; set; }
     }

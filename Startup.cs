@@ -1,8 +1,11 @@
-using Diplom.Models;
+using AutoMapper;
+using Diplom.Data;
+using Diplom.DataModels;
 using Diplom.Repositories;
+using Diplom.ViewModels.Mappings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,11 +39,31 @@ namespace Diplom
                 options.UseSqlServer(Configuration.GetConnectionString(Constants.DiplomDatabaseConnectionStringName))
                     .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
+            services.AddIdentity<AppUser, IdentityRole>
+                (o =>
+                {
+                    // configure identity options
+                    o.Password.RequireDigit = false;
+                    o.Password.RequireLowercase = false;
+                    o.Password.RequireUppercase = false;
+                    o.Password.RequireNonAlphanumeric = false;
+                    o.Password.RequiredLength = 6;
+                })
+                .AddEntityFrameworkStores<DiplomDatabaseContext>()
+                .AddDefaultTokenProviders();
 
             //Services
-            services.AddScoped<ITestingDataRepository, TestingDataRepository>();
+            services.AddScoped<IContextRepository, ContextRepository>();
 
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new ViewModelToEntityMappingProfile());
+            });
 
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+            // services.AddMvc();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
