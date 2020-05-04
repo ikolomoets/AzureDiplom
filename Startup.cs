@@ -1,8 +1,12 @@
 using AutoMapper;
+using Diplom.Auth;
 using Diplom.Data;
 using Diplom.DataModels;
+using Diplom.JWT;
 using Diplom.Repositories;
 using Diplom.ViewModels.Mappings;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +15,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
+using System.Text;
 
 namespace Diplom
 {
@@ -21,6 +28,9 @@ namespace Diplom
         {
             Configuration = configuration;
         }
+
+        private const string SecretKey = "iNivDmHLpUA223sqsfhqGbMRdRj1PVkH"; // todo: get this from somewhere secure
+        private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
 
         public IConfiguration Configuration { get; }
 
@@ -39,6 +49,72 @@ namespace Diplom
                 options.UseSqlServer(Configuration.GetConnectionString(Constants.DiplomDatabaseConnectionStringName))
                     .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
+            
+            //Services
+            services.AddScoped<IContextRepository, ContextRepository>();
+
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new ViewModelToEntityMappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+
+
+            services.AddSingleton<IJwtFactory, JwtFactory>();
+
+            // jwt wire up
+            // Get options from app settings
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+
+            // Configure JwtIssuerOptions
+            services.Configure<JwtIssuerOptions>(options =>
+            {
+                options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+                options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
+            });
+
+
+
+
+            // JWT
+            //var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+
+                ValidateAudience = true,
+                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = _signingKey,
+
+                RequireExpirationTime = false,
+                ValidateLifetime = false,
+                ClockSkew = TimeSpan.Zero
+            };
+            services.AddAuthentication(o =>
+            {
+                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.Authority = "https://localhost:5001";
+                //o.Audience = "your-api-id";
+                o.RequireHttpsMetadata = false;
+                o.TokenValidationParameters = tokenValidationParameters;
+            });
+
+            services.AddAuthorization(options => 
+            { 
+                options.AddPolicy("ApiUser", policy => policy.RequireClaim(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol, Helpers.Constants.Strings.JwtClaims.ApiAccess));
+            });
+
             services.AddIdentity<AppUser, IdentityRole>
                 (o =>
                 {
@@ -52,18 +128,7 @@ namespace Diplom
                 .AddEntityFrameworkStores<DiplomDatabaseContext>()
                 .AddDefaultTokenProviders();
 
-            //Services
-            services.AddScoped<IContextRepository, ContextRepository>();
-
-            // Auto Mapper Configurations
-            var mappingConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new ViewModelToEntityMappingProfile());
-            });
-
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
-            // services.AddMvc();
+            services.AddMvc(option => option.EnableEndpointRouting = false).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -88,20 +153,36 @@ namespace Diplom
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+
+            app.UseMvc();
+
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
             }
 
+            app.UseStaticFiles();
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                    pattern: "{controller=Auth}/{action=login}/{id?}");
             });
+
+
+            //app.UseJwtBearerAuthentication(new JwtBearerOptions
+            //{
+            //    AutomaticAuthenticate = true,
+            //    AutomaticChallenge = true,
+            //    TokenValidationParameters = tokenValidationParameters
+            //});
+
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
