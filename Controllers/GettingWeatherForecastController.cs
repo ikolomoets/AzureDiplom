@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Diplom.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using Diplom.DataModels;
 
@@ -18,13 +17,11 @@ namespace Diplom.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<GettingWeatherForecastController> _logger;
         private readonly IContextRepository _dataRepository;
 
 
-        public GettingWeatherForecastController(ILogger<GettingWeatherForecastController> logger, IContextRepository dataRepository)
+        public GettingWeatherForecastController(IContextRepository dataRepository)
         {
-            _logger = logger;
             _dataRepository = dataRepository;
         }
 
