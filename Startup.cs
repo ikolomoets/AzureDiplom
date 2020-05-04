@@ -7,6 +7,7 @@ using Diplom.Repositories;
 using Diplom.ViewModels.Mappings;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -78,40 +79,9 @@ namespace Diplom
                 options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
             });
 
-
-
-
-            // JWT
-            //var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-            var tokenValidationParameters = new TokenValidationParameters
+            // api user claim policy
+            services.AddAuthorization(options =>
             {
-                ValidateIssuer = true,
-                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
-
-                ValidateAudience = true,
-                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
-
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = _signingKey,
-
-                RequireExpirationTime = false,
-                ValidateLifetime = false,
-                ClockSkew = TimeSpan.Zero
-            };
-            services.AddAuthentication(o =>
-            {
-                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
-            {
-                o.Authority = "https://localhost:5001";
-                //o.Audience = "your-api-id";
-                o.RequireHttpsMetadata = false;
-                o.TokenValidationParameters = tokenValidationParameters;
-            });
-
-            services.AddAuthorization(options => 
-            { 
                 options.AddPolicy("ApiUser", policy => policy.RequireClaim(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol, Helpers.Constants.Strings.JwtClaims.ApiAccess));
             });
 
@@ -129,6 +99,38 @@ namespace Diplom
                 .AddDefaultTokenProviders();
 
             services.AddMvc(option => option.EnableEndpointRouting = false).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+
+
+
+
+            //JWT
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser()
+                    .Build();
+            }
+            );
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+
+                    ValidateAudience = true,
+                    ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = _signingKey,
+
+                    RequireExpirationTime = false,
+                    ValidateLifetime = false,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -154,14 +156,11 @@ namespace Diplom
 
             app.UseHttpsRedirection();
 
-            app.UseMvc();
-
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
             }
 
-            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseAuthentication();
@@ -175,13 +174,9 @@ namespace Diplom
                     pattern: "{controller=Auth}/{action=login}/{id?}");
             });
 
-
-            //app.UseJwtBearerAuthentication(new JwtBearerOptions
-            //{
-            //    AutomaticAuthenticate = true,
-            //    AutomaticChallenge = true,
-            //    TokenValidationParameters = tokenValidationParameters
-            //});
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.UseMvc();
 
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
