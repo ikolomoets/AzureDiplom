@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Diplom.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AccountsController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;

@@ -101,8 +101,6 @@ namespace Diplom
             services.AddMvc(option => option.EnableEndpointRouting = false).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
 
-
-
             //JWT
             services.AddAuthorization(options =>
             {
