@@ -1,0 +1,23 @@
+.tabs-header {
+    display: flex;
+    height: 100%;
+  }
+
+.tab-label {
+    margin: 0 10px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    background: none;
+  }
+
+.active {
+    color: #789C55;
+    background: white;
+  }

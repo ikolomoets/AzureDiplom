@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+<!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
   <a class="navbar-brand" href="#">DotNetGigs</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -23,4 +23,55 @@
   </li>
   </ul> 
   </div>
-</nav>
+</nav> -->
+<div class="header-block">
+  <div class="header-block__title"> НАДЗВИЧАЙНІ СИТУАЦІХ НА ТЕРИТОРІЇ УКРАЇНИ </div>
+  <button class="header-block__login-btn"><span>LOG IN</span></button>
+</div>
+<div class="row">
+  <div class="main-block__options-panel">
+    <div class="row main-block__options-panel_select-btn_holder">
+
+      <div class="col" *ngIf="_isMapShown">
+        <select class="main-block__options-panel_select-btn __type">
+          <option>ТЕХНОГЕННОГО</option>
+          <option>ПРИРОДНОГО</option>
+          <option>СОЦІАЛЬНО-ПОЛІТИЧНОГО</option>
+          <option>ВІЙСЬКОВОГО</option>
+        </select>
+        <select class="main-block__options-panel_select-btn __year">
+          <option>2017</option>
+          <option>2018</option>
+          <option>2019</option>
+          <option>2020</option>
+        </select>
+      </div>
+      <div class="col" *ngIf="_isMapShown || _isTablesShown">
+        <div class="tabs-header">
+          <button (click)="_shooseMap()" class="tab-label" [ngClass]="{'active': _isMapShown}">КАРТА</button>
+          <button (click)="_shooseTables()" class="tab-label" [ngClass]="{'active': _isTablesShown}">ТАБЛИЦІ</button>
+        </div>
+        <!-- <app-tabs>
+          <app-tab-item>
+            <app-tab-label>First tab</app-tab-label>
+            <app-tab-body>
+              IO am first content
+            </app-tab-body>
+          </app-tab-item>
+          <app-tab-item>
+            <app-tab-label>second tab</app-tab-label>
+            <app-tab-body>
+              I am second Content
+            </app-tab-body>
+          </app-tab-item>
+          <app-tab-item label="third tab">
+            <app-tab-label>third</app-tab-label>
+            <app-tab-body>
+              I am third content
+            </app-tab-body>
+          </app-tab-item>
+        </app-tabs> -->
+      </div>
+    </div>
+  </div>
+</div>

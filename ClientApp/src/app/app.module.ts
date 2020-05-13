@@ -11,12 +11,19 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { ConfigService } from './shared/utils/config.service';
 import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
 import { HomeComponent } from './home/home.component';
+import { MainMapComponent } from './main-map/main-map.component';
+import { AddEventComponent } from './add-event/add-event.component';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { AgmCoreModule } from '@agm/core';
+import { TabsModule } from './shared/tabs/tabs.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     HeaderComponent,
+    MainMapComponent,
+    AddEventComponent
   ],
   imports: [
     AccountModule,
@@ -24,14 +31,26 @@ import { HomeComponent } from './home/home.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    SlickCarouselModule,
+    TabsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyApasCXaCKWjpidhK9F0EJTHP1UZ1Cfm2w',
+      libraries: ['places']
+    }),
     RouterModule.forRoot([
-      { path: '', component: HomeComponent },
+      { path: '',   redirectTo: '/map', pathMatch: 'full' },
+      { path: 'home', component: HomeComponent },
+      { path: 'map', component: MainMapComponent },
+      { path: 'add-event', component: AddEventComponent },
+
       { path: 'account', loadChildren: './account/account.module#AccountModule' },
+      { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
     ])
   ],
-  providers: [ConfigService, { 
-    provide: HttpXhrBackend, 
-    useClass: AuthenticateXHRBackend}],
+  providers: [ConfigService, {
+    provide: HttpXhrBackend,
+    useClass: AuthenticateXHRBackend
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

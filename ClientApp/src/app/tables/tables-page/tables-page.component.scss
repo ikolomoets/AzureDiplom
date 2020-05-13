@@ -1,0 +1,68 @@
+.table-item{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    border: 2px solid #C4C4C4;
+    box-sizing: border-box;
+
+}
+
+.table-item.__header{
+    font-size: 20px;
+    line-height: 22px;
+
+    background: #DAD8D8;
+    min-height: 40px;
+
+}
+
+.table-item.__content{
+    font-size: 18px;
+    line-height: 20px;
+    
+    background: #FFFFFF;
+    min-height: 50px;
+}
+
+.table-block{
+    padding: 40px;
+    display: block;
+    position: relative;
+}
+
+.table-block__title{
+    font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 26px;
+line-height: 28px;
+display: flex;
+align-items: center;
+}
+
+.table-block__table{
+    margin: 0;
+    padding: 0;
+    margin-top: 10px;
+    width: 100%;
+}
+
+
+.tables__options-panel_select-btn{
+    background: #FFFFFF;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.tables__options-panel_select-btn.__type{
+
+}
+
+.tables__options-panel_select-btn.__year{
+
+}

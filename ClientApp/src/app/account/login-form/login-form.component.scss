@@ -1,0 +1,20 @@
+.login-form-center{
+    margin: 30px auto;
+}
+
+.card{
+    padding: 25px;
+}
+
+.login-form__button{
+    width: 100%;
+    background: #789C55;
+    color: white;
+    height: 44px;
+    border: none;
+    border-radius: 4px;
+}
+
+.login-form__button:disabled{
+    background: #9bb484;
+}

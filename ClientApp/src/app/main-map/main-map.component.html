@@ -1,0 +1,49 @@
+<!-- <div class="map-page">
+    <agm-map class="main-map" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [backgroundColor]="green">
+        <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng"
+            (markerClick)="selectMarker(marker)"></agm-marker>
+    </agm-map>
+
+    <div *ngIf="currentMarker" class="marker-info">
+        <h1>{{ currentMarker.adress }}</h1>
+        {{ currentMarker.desc }}
+    </div>
+
+</div>
+<button class="btn btn-primary" routerLink="add-event"> Add event</button> -->
+
+<div class="map-page">
+
+  
+      
+    <div class="main-block">
+        
+        <div class="row map-row">
+            <div class="col-8">
+                <agm-map class="main-map" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom"
+                    [backgroundColor]="green">
+                    <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng"
+                        (markerClick)="selectMarker(marker)"></agm-marker>
+                </agm-map>
+            </div>
+            <div class="col-4">
+                <div *ngIf="currentMarker" class="marker-info">
+                    <h1>{{ currentMarker.adress }}</h1>
+                    {{ currentMarker.desc }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slider-block">
+        <div class="slider-block__init">
+            <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig"
+                (init)="slickInit($event)" (breakpoint)="breakpoint($event)" (afterChange)="afterChange($event)"
+                (beforeChange)="beforeChange($event)">
+                <div ngxSlickItem *ngFor="let slide of slides" class="slide">
+                    <img src="{{ slide.img }}" alt="" width="100%">
+                </div>
+            </ngx-slick-carousel>
+        </div>
+    </div>
+</div>
