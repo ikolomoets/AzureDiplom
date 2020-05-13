@@ -39,7 +39,7 @@ namespace Diplom.Controllers
             var result = await _userManager.CreateAsync(userIdentity, model.Password);
             if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
-            await _context.JobSeekers.AddAsync(new JobSeekers { IdentityId = userIdentity.Id, Location = model.Location });
+            await _context.AppUserInfos.AddAsync(new AppUserInfo { IdentityId = userIdentity.Id, Location = model.Location });
             await _context.SaveChangesAsync();
 
             return new OkResult();

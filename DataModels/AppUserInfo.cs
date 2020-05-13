@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Diplom.DataModels
 {
-    public partial class JobSeekers
+    public partial class AppUserInfo
     {
         public int Id { get; set; }
         public string IdentityId { get; set; }

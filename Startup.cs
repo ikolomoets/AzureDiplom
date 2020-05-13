@@ -4,6 +4,7 @@ using Diplom.Data;
 using Diplom.DataModels;
 using Diplom.JWT;
 using Diplom.Repositories;
+using Diplom.Services;
 using Diplom.ViewModels.Mappings;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -38,7 +39,9 @@ namespace Diplom
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -52,7 +55,12 @@ namespace Diplom
 
             
             //Services
-            services.AddScoped<IContextRepository, ContextRepository>();
+            services.AddScoped<IEmergencyRepository, EmergencyRepository>();
+            services.AddScoped<IEmergencyService, EmergencyService>();
+
+            services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IEventService, EventService>();
+
 
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
@@ -62,8 +70,6 @@ namespace Diplom
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-
-
 
             services.AddSingleton<IJwtFactory, JwtFactory>();
 
