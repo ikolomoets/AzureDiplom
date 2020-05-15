@@ -52,10 +52,10 @@ export class LoginFormComponent implements OnInit, OnDestroy {
           console.log(result)      
           if (result) {
 
-             this.router.navigate(['/dashboard/home']);             
+             this.router.navigate(['/map']);             
           }
         },
-        error => console.log(error));
+        error => this.errors = error);
     }
   }
 }

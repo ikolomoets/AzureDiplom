@@ -26,14 +26,15 @@
 </nav> -->
 <div class="header-block">
   <div class="header-block__title"> НАДЗВИЧАЙНІ СИТУАЦІХ НА ТЕРИТОРІЇ УКРАЇНИ </div>
-  <button class="header-block__login-btn"><span>LOG IN</span></button>
+  <button (click)="router.navigate(['/login'])" class="header-block__login-btn"><span>LOG IN</span></button>
 </div>
 <div class="row">
   <div class="main-block__options-panel">
     <div class="row main-block__options-panel_select-btn_holder">
 
       <div class="col" *ngIf="_isMapShown">
-        <select class="main-block__options-panel_select-btn __type">
+        <select (change)="typeChanged($event)" class="main-block__options-panel_select-btn __type">
+          <option>ВСІ</option>
           <option>ТЕХНОГЕННОГО</option>
           <option>ПРИРОДНОГО</option>
           <option>СОЦІАЛЬНО-ПОЛІТИЧНОГО</option>
@@ -41,9 +42,6 @@
         </select>
         <select class="main-block__options-panel_select-btn __year">
           <option>2017</option>
-          <option>2018</option>
-          <option>2019</option>
-          <option>2020</option>
         </select>
       </div>
       <div class="col" *ngIf="_isMapShown || _isTablesShown">

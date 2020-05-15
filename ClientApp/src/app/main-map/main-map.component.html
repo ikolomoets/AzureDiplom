@@ -28,7 +28,8 @@
             </div>
             <div class="col-4">
                 <div *ngIf="currentMarker" class="marker-info">
-                    <h1>{{ currentMarker.adress }}</h1>
+                    <h1>{{ currentMarker.name }}</h1>
+                    <h5><i>{{ currentMarker.address }}</i></h5>
                     {{ currentMarker.desc }}
                 </div>
             </div>

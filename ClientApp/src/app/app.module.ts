@@ -17,6 +17,8 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { AgmCoreModule } from '@agm/core';
 import { TabsModule } from './shared/tabs/tabs.module';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +35,7 @@ import { TabsModule } from './shared/tabs/tabs.module';
     FormsModule,
     SlickCarouselModule,
     TabsModule,
+    NgbModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyApasCXaCKWjpidhK9F0EJTHP1UZ1Cfm2w',
       libraries: ['places']
@@ -47,7 +50,8 @@ import { TabsModule } from './shared/tabs/tabs.module';
       { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
     ])
   ],
-  providers: [ConfigService, {
+  providers: [ConfigService, 
+    {
     provide: HttpXhrBackend,
     useClass: AuthenticateXHRBackend
   }],

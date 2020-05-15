@@ -1,30 +1,102 @@
-<div class="container">
-    <form (ngSubmit)="onSubmited()" #newMarkerForm="ngForm">
-        <div class="form-group">
-            <label for="name">Address</label>
-            <input type="text" class="form-control" id="address" required [(ngModel)]="newMarker.address" name="address"
-                #address="ngModel">
-            <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
-                Address is required
+<div class="col-md-6 login-form-center">
+    <div class="card">
+        <form (ngSubmit)="onSubmited()" #newMarkerForm="ngForm">
+
+            <div class="form-group">
+                <label for="name" >Назва НС <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="name" required [(ngModel)]="currentEvent.eventName" name="name"
+                    #name="ngModel">
+                <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                    Name is required
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label for="name">Description</label>
-            <input type="text" class="form-control" id="desc" required [(ngModel)]="newMarker.desc" name="desc"
-                #desc="ngModel">
-            <div [hidden]="desc.valid || desc.pristine" class="alert alert-danger">
-                Description is required
+            <div class="form-group">
+                <label for="name">Місце НС <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="address" required [(ngModel)]="currentEvent.eventPosition.place"
+                    name="address" #address="ngModel">
+                <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
+                    Address is required
+                </div>
             </div>
-        </div>
 
-        <agm-map class="marker-map" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom"
-            (mapClick)="addMarker($event.coords.lat, $event.coords.lng)">
-            <agm-marker [latitude]="newMarker.lat" [longitude]="newMarker.lng"></agm-marker>
+            <div class="form-group">
+                <label for="name">Опис ситуації <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="desc" required [(ngModel)]="currentEvent.description" name="desc"
+                    #desc="ngModel">
+                <div [hidden]="desc.valid || desc.pristine" class="alert alert-danger">
+                    Description is required
+                </div>
+            </div>
 
-        </agm-map>
-        <button type="submit" class="btn btn-success"
-            [disabled]="!newMarkerForm.form.valid || newMarker.lat === 0">Submit</button>
+            <div class="form-group">
+                <label for="name">Кількість постраждалих осіб</label>
+                <input type="number" min="0" class="form-control" id="harmed" [(ngModel)]="currentEvent.harmed"
+                    name="harmed" #harmed="ngModel">
+            </div>
+            <div class="form-group">
+                <label for="name">Кількісь померлих осіб</label>
+                <input type="number" min="0" class="form-control" id="deaths"  [(ngModel)]="currentEvent.deaths"
+                    name="deaths" #deaths="ngModel">
+            </div>
+            <div class="form-group">
+                <label for="name">Збитки</label>
+                <input type="number" min="0" class="form-control" id="losses" [(ngModel)]="currentEvent.losses"
+                    name="losses" #losses="ngModel">
+            </div>
+            <div class="form-group">
+                <label for="name">Вартість ліквідації</label>
+                <input type="number" min="0" class="form-control" id="costs" [(ngModel)]="currentEvent.costs"
+                    name="costs" #costs="ngModel">
+            </div>
+            <div class="form-group">
+                 <label for="name">Дата НС <span style="color: red;">*</span></label>
+               <!-- <input type="text" class="form-control" id="address" required [(ngModel)]="currentEvent.address"
+                    name="address" #address="ngModel">
+                <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
+                    Address is required
+                </div> -->
+                <div class="input-group">
+                    <input class="form-control" id="date" placeholder="yyyy-mm-dd"
+                           name="date" [(ngModel)]="currentEventDate" required ngbDatepicker #date="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="date.toggle()" type="button"></button>
+                    </div>
+                  </div>
+            </div>
+            <div class="form-group">
+                 <label for="name">Характер НС <span style="color: red;">*</span></label>
+                <!--<input type="text" class="form-control" id="address" required [(ngModel)]="newcurrentEventMarker.address"
+                    name="address" #address="ngModel">
+                <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
+                    Address is required
+                </div> -->
 
-    </form>
+                <select class="form-control" id="emergency_name" required [(ngModel)]="emergencyType"
+                name="emergency_name" #emergency_name="ngModel" >
+                    <option>техногенного</option>
+                    <option>природного</option>
+                    <option>соціально-політичного</option>
+                    <option>військового</option>
+                  </select>
+                  
+                <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
+                    Address is required
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Місце НС на карті <span style="color: red;">*</span></label>
+                
+                <agm-map class="marker-map" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom"
+                    (mapClick)="addMarker($event.coords.lat, $event.coords.lng)">
+                    <agm-marker [latitude]="newMarker.lat" [longitude]="newMarker.lng"></agm-marker>
+                </agm-map>
+            </div>
+
+            <button type="submit" class="form__button"
+                [disabled]="!newMarkerForm.form.valid || newMarker.lat === 0">Submit</button>
+
+        </form>
+    </div>
 </div>

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule }  from '@angular/forms';
-import { SharedModule }       from '../shared/modules/shared.module';
+import { SharedModule }       from '../shared/shared.module';
 
-import { UserService }  from '../shared/services/user.service';
+// import { UserService }  from '../shared/services/user.service';
 
 import { EmailValidator } from '../directives/email.validator.directive';
 
@@ -16,6 +16,6 @@ import { LoginFormComponent } from './login-form/login-form.component';
     CommonModule,FormsModule,routing,SharedModule
   ],
   declarations: [RegistrationFormComponent,EmailValidator, LoginFormComponent],
-  providers:    [ UserService ]
+  // providers:    [ UserService ]
 })
 export class AccountModule { }

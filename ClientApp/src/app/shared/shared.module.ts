@@ -6,14 +6,16 @@
 import { NgModule }           from '@angular/core';
 import { CommonModule }       from '@angular/common';
  
-import { myFocus } from '../../directives/focus.directive';
-import {SpinnerComponent} from '../../spinner/spinner.component';  
+import { myFocus } from '../directives/focus.directive';
+import {SpinnerComponent} from '../spinner/spinner.component';  
+import { UserService } from './services/user.service';
+import { EventService } from './services/event.service';
 
 
 @NgModule({
   imports:      [CommonModule],
   declarations: [myFocus,SpinnerComponent],
   exports:      [myFocus,SpinnerComponent],
-  providers:    []
+  providers:    [UserService, EventService]
 })
 export class SharedModule { }
