@@ -30,9 +30,8 @@ namespace Diplom.Repositories
 
         public Task<List<DateTime?>> DatesListAsync()
         {
-            return _context.Events.Select(e => e.Date).ToListAsync();
+            return _context.Events.Select(e => e.Date.Value.Year).Distinct().Select(d => new Nullable<DateTime>(new DateTime(d, 1, 1))).ToListAsync();
         }
-
         public async Task<IEnumerable<Event>> ListAsync()
         {
             return await _context.Events.Include(e => e.EventPosition).ToListAsync();
