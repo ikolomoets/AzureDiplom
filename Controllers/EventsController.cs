@@ -47,6 +47,13 @@ namespace Diplom.Controllers
             return await _eventService.ListAsync(date);
         }
 
+        [HttpGet("{date}/{emergencyId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IEnumerable<Event>> GetAsync(DateTime date, int emergencyId)
+        {
+            return await _eventService.ListAsync(date, emergencyId);
+        }
+
         [HttpGet("dates")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<List<DateTime?>> GetDatesAsync()
