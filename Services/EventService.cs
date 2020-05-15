@@ -41,6 +41,11 @@ namespace Diplom.Services
             return await _eventRepository.ListAsync(date);
         }
 
+        public async Task<IEnumerable<Event>> ListAsync(int eventId)
+        {
+            return await _eventRepository.ListAsync(eventId);
+        }
+
         public async Task<UpdateEventResponse> UpdateEventAsync(Event @event)
         {
             return await _eventRepository.UpdateEventAsync(@event);

@@ -78,5 +78,10 @@ namespace Diplom.Repositories
         {
             return await _context.Emergencies.Where(e => e.Name == EmergencyName).Include(e => e.Events).ToListAsync();
         }
+
+        public async Task<IEnumerable<Emergency>> ListAsync(int emergencyId)
+        {
+            return await _context.Emergencies.Where(e => e.EmergencyId == emergencyId).Include(e => e.Events).ToListAsync();
+        }
     }
 }
