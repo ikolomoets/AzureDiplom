@@ -59,5 +59,18 @@ namespace Diplom.Controllers
 
             return Ok();
         }
+
+        // POST: api/add/Event
+        [HttpPost("add")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> AddEventAsync([FromBody] Event @event)
+        {
+            var result = await _eventService.AddEventAsync(@event);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            return Ok();
+        }
     }
 }

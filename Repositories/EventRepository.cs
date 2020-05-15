@@ -13,6 +13,21 @@ namespace Diplom.Repositories
     {
         public EventRepository(DiplomDatabaseContext context) : base(context) { }
 
+        public async Task<AddEventResponse> AddEventAsync(Event @event)
+        {
+            try
+            {
+                _context.Events.Add(@event);
+                _context.SaveChanges();
+
+                return new AddEventResponse();
+            }
+            catch (Exception ex)
+            {
+                return new AddEventResponse(false, $"An error occurred when adding event: {ex.Message}");
+            }
+        }
+
         public Task<List<DateTime?>> DatesListAsync()
         {
             return _context.Events.Select(e => e.Date).ToListAsync();

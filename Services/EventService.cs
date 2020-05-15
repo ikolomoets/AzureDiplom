@@ -16,6 +16,11 @@ namespace Diplom.Services
             _eventRepository = eventRepository;
         }
 
+        public async Task<AddEventResponse> AddEventAsync(Event @event)
+        {
+            return await _eventRepository.AddEventAsync(@event);
+        }
+
         public async Task<List<DateTime?>> DatesListAsync()
         {
             return await _eventRepository.DatesListAsync();

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Diplom.DataModels;
 using Microsoft.AspNetCore.Http;
 using Diplom.Services;
+using Diplom.ViewModels;
 
 namespace Diplom.Controllers
 {
@@ -30,6 +31,13 @@ namespace Diplom.Controllers
         public async Task<IEnumerable<Emergency>> GetAsync(string EmergencyName)
         {
             return await _emergencyService.ListAsync(EmergencyName);
+        }
+
+        [HttpGet("statistic")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<StatisticViewModel> GetStatisticAsync()
+        {
+            return await _emergencyService.GetStatisticAsync();
         }
     }
 }
