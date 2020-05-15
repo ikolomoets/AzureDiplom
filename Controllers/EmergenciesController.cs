@@ -26,11 +26,18 @@ namespace Diplom.Controllers
             return await _emergencyService.ListAsync();
         }
 
-        [HttpGet("{EmergencyName}")]
+        //[HttpGet("{EmergencyName}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public async Task<IEnumerable<Emergency>> GetAsync(string EmergencyName)
+        //{
+        //    return await _emergencyService.ListAsync(EmergencyName);
+        //}
+
+        [HttpGet("{emergencyId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IEnumerable<Emergency>> GetAsync(string EmergencyName)
+        public async Task<IEnumerable<Emergency>> GetAsync(int emergencyId)
         {
-            return await _emergencyService.ListAsync(EmergencyName);
+            return await _emergencyService.ListAsync(emergencyId);
         }
 
         [HttpGet("statistic")]

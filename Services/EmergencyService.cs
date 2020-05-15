@@ -29,5 +29,11 @@ namespace Diplom.Services
         {
             return await _emergencyRepository.ListAsync(EmergencyName);
         }
+
+        public async Task<IEnumerable<Emergency>> ListAsync(int emergencyId)
+        {
+            return await _emergencyRepository.ListAsync(emergencyId);
+
+        }
     }
 }

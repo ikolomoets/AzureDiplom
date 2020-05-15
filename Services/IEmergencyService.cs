@@ -9,6 +9,7 @@ namespace Diplom.Services
     {
         Task<IEnumerable<Emergency>> ListAsync();
         Task<IEnumerable<Emergency>> ListAsync(string EmergencyName);
+        Task<IEnumerable<Emergency>> ListAsync(int emergencyId);
         Task<StatisticViewModel> GetStatisticAsync();
     }
 }

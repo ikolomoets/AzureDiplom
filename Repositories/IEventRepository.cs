@@ -10,6 +10,7 @@ namespace Diplom.Repositories
     {
         Task<IEnumerable<Event>> ListAsync();
         Task<IEnumerable<Event>> ListAsync(string eventName);
+        Task<IEnumerable<Event>> ListAsync(int eventId);
         Task<IEnumerable<Event>> ListAsync(DateTime date);
         Task<UpdateEventResponse> UpdateEventAsync(Event @event);
         Task<AddEventResponse> AddEventAsync(Event @event);

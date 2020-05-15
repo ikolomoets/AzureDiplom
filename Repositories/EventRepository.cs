@@ -48,6 +48,11 @@ namespace Diplom.Repositories
             return await _context.Events.Include(e => e.EventPosition).Where(e => e.Date.Value.Year == date.Year).ToListAsync();
         }
 
+        public async Task<IEnumerable<Event>> ListAsync(int eventId)
+        {
+            return await _context.Events.Include(e => e.EventPosition).Where(e => e.EventId == eventId).ToListAsync();
+        }
+
         public async Task<UpdateEventResponse> UpdateEventAsync(Event @event)
         {
             try

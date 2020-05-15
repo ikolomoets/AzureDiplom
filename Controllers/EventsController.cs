@@ -26,11 +26,18 @@ namespace Diplom.Controllers
             return await _eventService.ListAsync();
         }
 
-        [HttpGet("{eventName}")]
+        //[HttpGet("{eventName}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public async Task<IEnumerable<Event>> GetAsync(string eventName)
+        //{
+        //    return await _eventService.ListAsync(eventName);
+        //}
+
+        [HttpGet("{eventId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IEnumerable<Event>> GetAsync(string eventName)
+        public async Task<IEnumerable<Event>> GetAsync(int eventId)
         {
-            return await _eventService.ListAsync(eventName);
+            return await _eventService.ListAsync(eventId);
         }
 
         [HttpGet("dates/{date}")]
