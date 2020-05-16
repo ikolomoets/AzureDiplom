@@ -15,61 +15,71 @@
             <div class="col-2 table-item __header">Загинуло, осіб</div>
             <div class="col-2 table-item __header">Постраждало, осіб</div>
         </div>
+        <ng-container *ngIf="statistic$ | async as statistic">
 
-        <div class="row">
-            <div class="col-1 table-item __content"> </div>
-            <div class="col-7">
-                <div class="row">
-                    <div class="col-3 table-item __content"></div>
-                    <div class="col-3 table-item __content"></div>
-                    <div class="col-3 table-item __content"></div>
-                    <div class="col-3 table-item __content"></div>
+            <div class="row">
+                <div class="col-1 table-item __content">{{statistic.eventsNumber}}</div>
+                <div class="col-7">
+                    <div class="row">
+                        <div class="col-3 table-item __content">{{statistic.technogenicNumber}}</div>
+                        <div class="col-3 table-item __content">{{statistic.naturalNumber}}</div>
+                        <div class="col-3 table-item __content">{{statistic.socialNumber}}</div>
+                        <div class="col-3 table-item __content">{{statistic.militaryNumber}}</div>
+                    </div>
                 </div>
+                <div class="col-2 table-item __content">{{statistic.deathsCount}}</div>
+                <div class="col-2 table-item __content">{{statistic.harmedCount}}</div>
             </div>
-            <div class="col-2 table-item __content"></div>
-            <div class="col-2 table-item __content"></div>
-        </div>
+        </ng-container>
     </div>
 </div>
 <div class="table-block">
     <div class="table-block__title">
         <div class="row" style="width: 100%;">
             <div class="col-5">Надзвичайні ситуації:</div>
-            <div class="col-4"> Характер НС: 
-                <select class="tables__options-panel_select-btn __type">
-                    <option>техтогенний</option>
-                    <option>природний</option>
-                    <option>соціальний</option>
-                    <option>військовий</option>
-                  </select>
+            <div class="col-4"> Характер НС:
+                <select (change)="selectorsService.typeChanged($event)" class="main-block__options-panel_select-btn __type">
+                    <option [selected]="selectorsService.currentEmergencyTypeId == 1">техногенного</option>
+                    <option [selected]="selectorsService.currentEmergencyTypeId == 2">природного</option>
+                    <option [selected]="selectorsService.currentEmergencyTypeId == 3">соціально-політичного</option>
+                    <option [selected]="selectorsService.currentEmergencyTypeId == 4">військового</option>
+                </select>
             </div>
-            <div class="col-3"> 
+            <div class="col-3">
                 Рік:
-                <select class="tables__options-panel_select-btn __year">
-                    <option>2017</option>
-                    <option>2018</option>
-                    <option>2019</option>
-                    <option>2020</option>
-                  </select>
+                <select (change)="selectorsService.yearChanged($event)" class="main-block__options-panel_select-btn __year">
+                    <option>всі</option>
+                    <ng-container *ngIf="selectorsService.dates$ | async as dates">
+                        <ng-container *ngFor="let date of dates">
+                            <option  [selected]="selectorsService.currentEventYear == date">{{date}}</option>
+                        </ng-container>
+                    </ng-container>
+                </select>
             </div>
+
+
         </div>
     </div>
     <div class=" table-block__table">
         <div class="row">
-            <div class="col-2 table-item __header"> Код НС</div>
+            <div class="col-3 table-item __header"> Назва НС</div>
             <div class="col-2 table-item __header"> Дата</div>
             <div class="col-3 table-item __header"> Місце, де виникла НС</div>
-            <div class="col-3 table-item __header"> Збитки</div>
+            <div class="col-2 table-item __header"> Збитки</div>
             <div class="col-2 table-item __header"> Вартість ліквідації</div>
         </div>
-        <div class="row">
-            <div class="col-2 table-item __content"></div>
-            <div class="col-2 table-item __content"></div>
-            <div class="col-3 table-item __content"></div>
-            <div class="col-3 table-item __content"></div>
-            <div class="col-2 table-item __content"></div>
-        </div>
-    </div>
+        <ng-container *ngIf="eventService.events | async as events">
+            <ng-container *ngFor="let event of events">
+                <div class="row">
+                    <div class="col-3 table-item __content">{{event.eventName}}</div>
+                    <div class="col-2 table-item __content">{{event.date | date}}</div>
+                    <div class="col-3 table-item __content">{{event.eventPosition.place}}</div>
+                    <div class="col-2 table-item __content">{{event.losses || 0}}</div>
+                    <div class="col-2 table-item __content">{{event.costs || 0}}</div>
+                </div>
+            </ng-container>
+        </ng-container>
 
+    </div>
 
 </div>

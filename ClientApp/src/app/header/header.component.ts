@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 import { UserService } from '../shared/services/user.service';
 import { Router } from '@angular/router';
 import { EventService } from '../shared/services/event.service';
+import { SelectorsService } from '../shared/services/selectors.service';
 
 @Component({
   selector: 'app-header',
@@ -16,10 +17,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   _isMapShown: boolean = false;
   _isTablesShown: boolean = false;
-  dates: string[];
+
   constructor(private userService: UserService,
     private router: Router,
-    private eventService: EventService) {
+    private eventService: EventService, 
+    private selectorsService: SelectorsService) {
   }
 
   logout() {
@@ -30,12 +32,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     let url = window.location.pathname;
     console.log(url)
     if (url == "/tables") this._shooseTables();
-    else if (url == "/map") this._shooseMap();
+    else if (url == "/map" || url == "/") this._shooseMap();
     else {
       this._isMapShown = false;
       this._isTablesShown = false;
     }
-    this.subscription = this.userService.authNavStatus$.subscribe(status => this.status = status);
+    this.subscription = this.userService.authNavStatus$.subscribe(status => console.log(status));
+
   }
 
   ngOnDestroy() {
@@ -55,12 +58,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['/tables']);
   }
 
-  typeChanged($event) {
-    console.log($event)
-    if ($event.target.value == "ВСІ") {
-      this.eventService.getAllEvents();
-    } else {
-      this.eventService.getEmergency($event.target.value);
-    }
-  }
+
 }

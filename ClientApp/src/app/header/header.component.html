@@ -33,15 +33,20 @@
     <div class="row main-block__options-panel_select-btn_holder">
 
       <div class="col" *ngIf="_isMapShown">
-        <select (change)="typeChanged($event)" class="main-block__options-panel_select-btn __type">
+        <select (change)="selectorsService.typeChanged($event)" class="main-block__options-panel_select-btn __type">
           <option>ВСІ</option>
-          <option>ТЕХНОГЕННОГО</option>
-          <option>ПРИРОДНОГО</option>
-          <option>СОЦІАЛЬНО-ПОЛІТИЧНОГО</option>
-          <option>ВІЙСЬКОВОГО</option>
+          <option [selected]="selectorsService.currentEmergencyTypeId == 1">ТЕХНОГЕННОГО</option>
+          <option [selected]="selectorsService.currentEmergencyTypeId == 2">ПРИРОДНОГО</option>
+          <option [selected]="selectorsService.currentEmergencyTypeId == 3">СОЦІАЛЬНО-ПОЛІТИЧНОГО</option>
+          <option [selected]="selectorsService.currentEmergencyTypeId == 4">ВІЙСЬКОВОГО</option>
         </select>
-        <select class="main-block__options-panel_select-btn __year">
-          <option>2017</option>
+        <select  (change)="selectorsService.yearChanged($event)"  class="main-block__options-panel_select-btn __year">
+          <option>ВСІ</option>
+          <ng-container *ngIf="selectorsService.dates$ | async as dates">
+            <ng-container *ngFor="let date of dates">
+              <option  [selected]="selectorsService.currentEventYear == date">{{date}}</option>
+            </ng-container>
+          </ng-container>
         </select>
       </div>
       <div class="col" *ngIf="_isMapShown || _isTablesShown">

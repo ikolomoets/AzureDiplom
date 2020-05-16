@@ -10,12 +10,14 @@ import { myFocus } from '../directives/focus.directive';
 import {SpinnerComponent} from '../spinner/spinner.component';  
 import { UserService } from './services/user.service';
 import { EventService } from './services/event.service';
+import { EmergencyService } from './services/emergency.service';
+import { SelectorsService } from './services/selectors.service';
 
 
 @NgModule({
   imports:      [CommonModule],
   declarations: [myFocus,SpinnerComponent],
   exports:      [myFocus,SpinnerComponent],
-  providers:    [UserService, EventService]
+  providers:    [UserService, EventService, EmergencyService, SelectorsService]
 })
 export class SharedModule { }
