@@ -12,8 +12,8 @@ export class Event{
     public date?: string
     public imageData?: string[];
     public eventPosition: EventPosition;
-    public emergency: Emergency;
-    public emergencyId?: number;
+    public emergency?: Emergency;
+    public emergencyId: number;
     
     constructor(){
         this.eventPosition = new EventPosition();

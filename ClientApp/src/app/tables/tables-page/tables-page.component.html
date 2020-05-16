@@ -39,6 +39,7 @@
             <div class="col-5">Надзвичайні ситуації:</div>
             <div class="col-4"> Характер НС:
                 <select (change)="selectorsService.typeChanged($event)" class="main-block__options-panel_select-btn __type">
+                      <option>ВСІ</option>
                     <option [selected]="selectorsService.currentEmergencyTypeId == 1">техногенного</option>
                     <option [selected]="selectorsService.currentEmergencyTypeId == 2">природного</option>
                     <option [selected]="selectorsService.currentEmergencyTypeId == 3">соціально-політичного</option>

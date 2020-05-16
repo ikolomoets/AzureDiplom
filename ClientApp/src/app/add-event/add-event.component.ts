@@ -54,6 +54,7 @@ export class AddEventComponent implements OnInit {
     this.currentEvent.eventPosition.y = this.newMarker.lng
     console.log(this.newMarker, this.currentEvent);
 
+    this.currentEvent.emergency = null;
     this.eventService.addEvent(this.currentEvent);
   }
 }
