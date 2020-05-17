@@ -56,21 +56,17 @@ events$: Observable<any>;
   }
 
   slides = [
-    { img: "assets/images/1455168.jpg" },
-    { img: "assets/images/e311c6a9bc8ca8a94bc009daff8b72b6.jpg" },
-    { img: "assets/images/1455168.jpg" },
-    { img: "assets/images/e311c6a9bc8ca8a94bc009daff8b72b6.jpg" },
-    { img: "assets/images/1455168.jpg" },
-    { img: "assets/images/e311c6a9bc8ca8a94bc009daff8b72b6.jpg" },
-    { img: "assets/images/006.jpg" },
-    { img: "assets/images/007.jpg" },
-    { img: "assets/images/008.jpg" },
-    { img: "assets/images/009.jpg" },
-    { img: "assets/images/010.jpg" },
-    { img: "assets/images/011.jpg" },
-    { img: "assets/images/024.jpg" },
-    { img: "assets/images/025.jpg" },
-    { img: "assets/images/026.jpg" }
+    { img: "assets/images/911e2ef3-874e-4cc9-8421-9b64ec16d8f2.png" },
+    { img: "assets/images/421f7538-d3d7-43e0-baad-6c868a90a62a.png" },
+    { img: "assets/images/ea7303da-9835-11ea-bb37-0242ac130002.png" },
+    { img: "assets/images/f54c19a4-9835-11ea-bb37-0242ac130002.png" },
+    { img: "assets/images/01157c80-9836-11ea-bb37-0242ac130002.png" },
+    { img: "assets/images/09ac9dc4-9836-11ea-bb37-0242ac130002.png" },
+    { img: "assets/images/23e2161a-9836-11ea-bb37-0242ac130002.png" },
+    { img: "assets/images/25a4f9c2-9836-11ea-bb37-0242ac130002.png" },
+    { img: "assets/images/3099b250-9836-11ea-bb37-0242ac130002.png" },
+    { img: "assets/images/457866ee-9836-11ea-bb37-0242ac130002.png" },
+    { img: "assets/images/ea7303da-9835-11ea-bb37-0242ac130002.png" }
   ];
   slideConfig = {
     slidesToScroll: 3,
