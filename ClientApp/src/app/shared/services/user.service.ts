@@ -61,6 +61,7 @@ console.log(this.baseUrl + "/accounts")
       .pipe(map(res => { console.log(res); return JSON.parse( JSON.stringify(res))}),
       map(res => {
         localStorage.setItem('auth_token', res.auth_token);
+        localStorage.setItem('user_name', res.user_name);
         console.log(res, localStorage);
 
         this.loggedIn = true;
@@ -74,6 +75,7 @@ console.log(this.baseUrl + "/accounts")
 
   logout() {
     localStorage.removeItem('auth_token');
+    localStorage.removeItem('user_name');
     this.loggedIn = false;
     this._authNavStatusSource.next(false);
   }

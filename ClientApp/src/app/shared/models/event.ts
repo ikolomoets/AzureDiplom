@@ -2,7 +2,7 @@ import { EventPosition } from "./eventPosition";
 import { Emergency } from "./emergency";
 
 export class Event{
-    public eventid: number;
+    public eventId: number;
     public eventName: string;
     public description: string;
     public harmed?: number;

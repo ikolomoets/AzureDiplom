@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Marker } from '../shared/models/Marker';
 import { Event } from '../shared/models/event';
 import {NgbDateParserFormatter, NgbDate} from '@ng-bootstrap/ng-bootstrap';
-import { EMERGENCY_FE_NAME_TO_ID } from '../shared/models/emergency';
+import { EMERGENCY_FE_NAME_TO_ID, EMERGENCY_FE_ID_TA_NAME } from '../shared/models/emergency';
 import { EventService } from '../shared/services/event.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'app-add-event',
@@ -13,7 +15,10 @@ import { EventService } from '../shared/services/event.service';
 export class AddEventComponent implements OnInit {
 
   constructor( private ngbDateParserFormatter: NgbDateParserFormatter,
-    private eventService: EventService) { }
+    private eventService: EventService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router) { }
+    isExistedEvent: boolean = false;
 
   newMarker: Marker;
   currentEvent: Event;
@@ -25,7 +30,7 @@ export class AddEventComponent implements OnInit {
 
   ngOnInit() {
     this.newMarker = new Marker();
-    this.newMarker = { lat: 0, lng: 0,name: "", address: "", desc: "" };
+    this.newMarker = { lat: 0, lng: 0,name: "", address: "", desc: "", eventId: null };
     this.currentEvent = new Event();
 
     // this.currentEventDate = new Date('2020');
@@ -33,6 +38,20 @@ export class AddEventComponent implements OnInit {
     this.latitude = 49.045639;
     this.longitude = 31.159608;
     this.zoom = 5.2;
+    this.activatedRoute.paramMap
+      .pipe(map(() => window.history.state))
+      if(window.history.state.existedEvent){
+        this.setCurrentEvent(window.history.state.existedEvent);
+        this.isExistedEvent = true
+      }
+  }
+
+  setCurrentEvent(event: Event){
+    this.currentEvent = event;
+    let date = new Date(event.date)
+    this.currentEventDate = new NgbDate(date.getFullYear(), date.getMonth(), date.getDay());
+    this.newMarker = <Marker>{ lat: event.eventPosition.x, lng: event.eventPosition.y, name: event.eventName, address: event.eventPosition.place, desc: event.description, eventId: event.eventId }
+    this.emergencyType = EMERGENCY_FE_ID_TA_NAME.get(event.emergencyId).toLowerCase()
   }
 
   addMarker(lat: number, lng: number) {
@@ -55,6 +74,7 @@ export class AddEventComponent implements OnInit {
     console.log(this.newMarker, this.currentEvent);
 
     this.currentEvent.emergency = null;
-    this.eventService.addEvent(this.currentEvent);
+    this.eventService.modifyEvent(this.currentEvent, this.isExistedEvent);
+    this.router.navigate(["/map"])
   }
 }

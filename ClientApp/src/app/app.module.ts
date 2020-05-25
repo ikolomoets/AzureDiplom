@@ -18,6 +18,7 @@ import { AgmCoreModule } from '@agm/core';
 import { TabsModule } from './shared/tabs/tabs.module';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       { path: '',   redirectTo: '/map', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'map', component: MainMapComponent },
-      { path: 'add-event', component: AddEventComponent },
+      { path: 'add-event', component: AddEventComponent, canActivate: [AuthGuard] },
 
       { path: 'account', loadChildren: './account/account.module#AccountModule' },
       { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
