@@ -5,6 +5,7 @@ using Diplom.DataModels;
 using Microsoft.AspNetCore.Http;
 using Diplom.Services;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Diplom.Controllers
 {
@@ -61,6 +62,7 @@ namespace Diplom.Controllers
             return await _eventService.DatesListAsync();
         }
 
+        [Authorize]
         // PUT: api/update/Event
         [HttpPut("update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -75,6 +77,7 @@ namespace Diplom.Controllers
         }
 
         // POST: api/add/Event
+        [Authorize]
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> AddEventAsync([FromBody] Event @event)

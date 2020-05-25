@@ -53,7 +53,8 @@ namespace Diplom.Controllers
             {
                 id = identity.Claims.Single(c => c.Type == "id").Value,
                 auth_token = await _jwtFactory.GenerateEncodedToken(credentials.UserName, identity),
-                expires_in = (int)_jwtOptions.ValidFor.TotalSeconds
+                expires_in = (int)_jwtOptions.ValidFor.TotalSeconds,
+                user_name = identity.Name
             };
 
             var json = JsonConvert.SerializeObject(response, _serializerSettings);
