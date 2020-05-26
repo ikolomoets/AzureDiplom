@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Diplom.Services;
 using System;
 using Microsoft.AspNetCore.Authorization;
+using Diplom.ViewModels;
 
 namespace Diplom.Controllers
 {
@@ -66,9 +67,9 @@ namespace Diplom.Controllers
         // PUT: api/update/Event
         [HttpPut("update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> UpdateEventAsync([FromBody] Event @event)
+        public async Task<ActionResult> UpdateEventAsync([FromBody] EventDTO eventDTO)
         {
-            var result = await _eventService.UpdateEventAsync(@event);
+            var result = await _eventService.UpdateEventAsync(eventDTO);
 
             if (!result.Success)
                 return BadRequest(result.Message);
@@ -80,9 +81,9 @@ namespace Diplom.Controllers
         [Authorize]
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> AddEventAsync([FromBody] Event @event)
+        public async Task<ActionResult> AddEventAsync([FromBody] EventDTO eventDTO)
         {
-            var result = await _eventService.AddEventAsync(@event);
+            var result = await _eventService.AddEventAsync(eventDTO);
 
             if (!result.Success)
                 return BadRequest(result.Message);

@@ -61,6 +61,7 @@ namespace Diplom
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IEventService, EventService>();
 
+            services.AddScoped<IContentProvider>(provider => new BlobStorageContentProvider(Configuration.GetConnectionString(Constants.BlobStorageConnectionStringName)));
 
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>

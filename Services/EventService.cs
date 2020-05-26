@@ -1,8 +1,12 @@
-﻿using Diplom.DataModels;
+﻿using AutoMapper;
+using Diplom.DataModels;
 using Diplom.Repositories;
 using Diplom.Services.Communication;
+using Diplom.ViewModels;
+using ServiceStack;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Diplom.Services
@@ -10,14 +14,26 @@ namespace Diplom.Services
     public class EventService : IEventService
     {
         private readonly IEventRepository _eventRepository;
+        private readonly IMapper _mapper;
+        private readonly IContentProvider _contentProvider;
 
-        public EventService(IEventRepository eventRepository)
+
+        public EventService(IEventRepository eventRepository, IMapper mapper, IContentProvider contentProvider)
         {
             _eventRepository = eventRepository;
+            _mapper = mapper;
+            _contentProvider = contentProvider;
         }
 
-        public async Task<AddEventResponse> AddEventAsync(Event @event)
+        public async Task<AddEventResponse> AddEventAsync(EventDTO eventViewModel)
         {
+            var blobs = eventViewModel.ImageByteArrayList;
+
+            var @event = _mapper.Map<EventDTO, Event>(eventViewModel);
+
+            await _contentProvider.RemoveByFullPath(@event.ImageData.Split(Constants.Delimiter).ToList());
+            await _contentProvider.UploadBlobs(@event, blobs);
+
             return await _eventRepository.AddEventAsync(@event);
         }
 
@@ -51,8 +67,15 @@ namespace Diplom.Services
             return await _eventRepository.ListAsync(date, emergencyId);
         }
 
-        public async Task<UpdateEventResponse> UpdateEventAsync(Event @event)
+        public async Task<UpdateEventResponse> UpdateEventAsync(EventDTO eventDTO)
         {
+            var blobs = eventDTO.ImageByteArrayList;
+
+            var @event = _mapper.Map<EventDTO, Event>(eventDTO);
+
+            await _contentProvider.RemoveByFullPath(@event.ImageData.Split(Constants.Delimiter).ToList());
+            await _contentProvider.UploadBlobs(@event, blobs);
+
             return await _eventRepository.UpdateEventAsync(@event);
         }
     }

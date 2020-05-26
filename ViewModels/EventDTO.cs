@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Diplom.DataModels;
+using Diplom.ViewModels.Validations;
+using ServiceStack.FluentValidation.Attributes;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Diplom.DataModels
+namespace Diplom.ViewModels
 {
-    public class Event
+    public class EventDTO
     {
         public int EventId { get; set; }
         public string EventName { get; set; }
@@ -15,7 +16,7 @@ namespace Diplom.DataModels
         public double? Losses { get; set; }
         public double? Costs { get; set; }
         public DateTime? Date { get; set; }
-        public string ImageData { get; set; }
+        public List<byte[]> ImageByteArrayList { get; set; }
 
         public EventPosition EventPosition { get; set; }
 

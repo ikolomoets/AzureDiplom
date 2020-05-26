@@ -1,5 +1,6 @@
 ﻿using Diplom.DataModels;
 using Diplom.Services.Communication;
+using Diplom.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,8 +14,8 @@ namespace Diplom.Services
         Task<IEnumerable<Event>> ListAsync(int eventId);
         Task<IEnumerable<Event>> ListAsync(DateTime date);
         Task<IEnumerable<Event>> ListAsync(DateTime date, int emergencyId);
-        Task<UpdateEventResponse> UpdateEventAsync(Event @event);
-        Task<AddEventResponse> AddEventAsync(Event @event);
+        Task<UpdateEventResponse> UpdateEventAsync(EventDTO eventDTO);
+        Task<AddEventResponse> AddEventAsync(EventDTO eventDTO);
         Task<List<DateTime?>> DatesListAsync();
     }
 }
