@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/shared/services/event.service';
 import { EmergencyService } from 'src/app/shared/services/emergency.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { SelectorsService } from 'src/app/shared/services/selectors.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-tables-page',
@@ -11,18 +12,23 @@ import { SelectorsService } from 'src/app/shared/services/selectors.service';
 })
 export class TablesPageComponent implements OnInit {
 
-  constructor( private eventService: EventService,
-    private emergencyService: EmergencyService, 
+  constructor(private eventService: EventService,
+    private userService: UserService,
+    private emergencyService: EmergencyService,
     private selectorsService: SelectorsService) { }
 
-events$: Observable<any>;
+  events$: Observable<any>;
 
+  status: boolean;
+  subscription: Subscription;
   statistic$: Observable<any>
   ngOnInit() {
+    this.subscription = this.userService.authNavStatus$.subscribe(status => this.status = status);
+
     this.statistic$ = this.emergencyService.getEmergenciesStatistic()
   }
 
-  show(date){
+  show(date) {
     console.log(date)
   }
 

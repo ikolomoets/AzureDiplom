@@ -4,4 +4,5 @@ export class Marker{
     name: string;
     address: string;
     desc: string;
+    eventId: number;
 }

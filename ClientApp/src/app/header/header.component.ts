@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   _isMapShown: boolean = false;
   _isTablesShown: boolean = false;
-
+userName:string = "";
   constructor(private userService: UserService,
     private router: Router,
     private eventService: EventService, 
@@ -37,8 +37,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this._isMapShown = false;
       this._isTablesShown = false;
     }
-    this.subscription = this.userService.authNavStatus$.subscribe(status => console.log(status));
-
+    this.subscription = this.userService.authNavStatus$.subscribe(status => this.status = status);
+    this.userName = localStorage.getItem("user_name");
   }
 
   ngOnDestroy() {
