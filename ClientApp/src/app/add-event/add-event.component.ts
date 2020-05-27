@@ -109,7 +109,8 @@ export class AddEventComponent implements OnInit {
     this.currentEvent.imageByteArrayList = this.selectedFiles.map(file => file.data)
     console.log(this.currentEvent.imageByteArrayList)
     this.currentEvent.emergency = null;
+
     this.eventService.modifyEvent(this.currentEvent, this.isExistedEvent);
-    this.router.navigate(["/map"])
+    // this.router.navigate(["/map"])
   }
 }

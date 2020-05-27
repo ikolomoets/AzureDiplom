@@ -13,9 +13,9 @@ export class EventService {
     events: BehaviorSubject<Event[]> = new BehaviorSubject([])
     currentEvents = this.events.asObservable();
 
-    httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
+    // httpOptions = {
+    //     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    // };
 
     constructor(private configService: ConfigService,
         private http: HttpClient) {
@@ -52,20 +52,18 @@ export class EventService {
     modifyEvent(event: Event, isExist: boolean): void {
         console.log(event)
 
-        // let headers = new HttpHeaders();
-        // headers = headers.append('Content-Type', 'application/json-patch+json');
+        let headers = new HttpHeaders();
+        headers = headers.append('Content-Type', 'application/json-patch+json');
         let authToken = localStorage.getItem('auth_token');
-        // headers = headers.set('Authorization', `Bearer ${authToken}`);
-        this.httpOptions.headers = this.httpOptions.headers.append('Authorization', `Bearer ${authToken}`);
+        headers = headers.set('Authorization', `Bearer ${authToken}`);
+        // this.httpOptions.headers = this.httpOptions.headers.append('Authorization', `Bearer ${authToken}`);
 
         if(isExist){
-            this.http.put(this.baseUrl + "/Events/update", event, this.httpOptions)
-            .subscribe(data => console.log(data),
-                        error => alert("Error. You are not authorized"));
+            this.http.put(this.baseUrl + "/Events/update", event, {headers} )
+            .subscribe(data => console.log(data));
         } else{
-            this.http.post(this.baseUrl + "/Events/add", event, this.httpOptions)
-            .subscribe(data => console.log(data),
-                         error => alert("Error. You are not authorized"));
+            this.http.post(this.baseUrl + "/Events/add", event, {headers})
+            .subscribe(data => console.log(data));
         }        
     }
 

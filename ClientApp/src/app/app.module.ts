@@ -45,7 +45,7 @@ import { AuthGuard } from './auth.guard';
       { path: '',   redirectTo: '/map', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'map', component: MainMapComponent },
-      { path: 'add-event', component: AddEventComponent, canActivate: [AuthGuard] },
+      { path: 'add-event', component: AddEventComponent},
 
       { path: 'account', loadChildren: './account/account.module#AccountModule' },
       { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
