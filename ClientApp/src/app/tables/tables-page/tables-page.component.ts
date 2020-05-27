@@ -4,6 +4,7 @@ import { EmergencyService } from 'src/app/shared/services/emergency.service';
 import { Observable, Subscription } from 'rxjs';
 import { SelectorsService } from 'src/app/shared/services/selectors.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tables-page',
@@ -15,7 +16,8 @@ export class TablesPageComponent implements OnInit {
   constructor(private eventService: EventService,
     private userService: UserService,
     private emergencyService: EmergencyService,
-    private selectorsService: SelectorsService) { }
+    private selectorsService: SelectorsService,
+    private router: Router) { }
 
   events$: Observable<any>;
 
@@ -25,11 +27,15 @@ export class TablesPageComponent implements OnInit {
   ngOnInit() {
     this.subscription = this.userService.authNavStatus$.subscribe(status => this.status = status);
 
-    this.statistic$ = this.emergencyService.getEmergenciesStatistic()
+    this.statistic$ = this.emergencyService.getEmergenciesStatistic();
   }
 
   show(date) {
     console.log(date)
+  }
+  
+  updateEvent(event: Event){
+    this.router.navigate(['/add-event'], {state: {existedEvent: event}});
   }
 
 }

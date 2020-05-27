@@ -10,7 +10,7 @@ export class Event{
     public losses?: number;
     public costs?: number;
     public date?: string
-    public imageData?: string[];
+    public imageByteArrayList?: string[];
     public eventPosition: EventPosition;
     public emergency?: Emergency;
     public emergencyId: number;

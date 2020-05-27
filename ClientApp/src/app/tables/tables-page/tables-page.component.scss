@@ -66,3 +66,20 @@ align-items: center;
 .tables__options-panel_select-btn.__year{
 
 }
+
+.table-block__table_row{
+    display: flex;
+    width: 100%;
+    position: relative;
+}
+.table-block__table_row_elements{
+    width: inherit;
+}
+.table-block__table_edit-icon{
+    position:relative;
+    margin: 2px 0 0 2px;
+}
+
+.table-block__table-header{
+    padding-right: 27px;
+}

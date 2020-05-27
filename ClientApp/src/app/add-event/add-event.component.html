@@ -3,9 +3,9 @@
         <form (ngSubmit)="onSubmited()" #newMarkerForm="ngForm">
 
             <div class="form-group">
-                <label for="name" >Назва НС <span style="color: red;">*</span></label>
-                <input type="text" class="form-control" id="name" required [(ngModel)]="currentEvent.eventName" name="name"
-                    #name="ngModel">
+                <label for="name">Назва НС <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="name" required [(ngModel)]="currentEvent.eventName"
+                    name="name" #name="ngModel">
                 <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
                     Name is required
                 </div>
@@ -13,8 +13,8 @@
 
             <div class="form-group">
                 <label for="name">Місце НС <span style="color: red;">*</span></label>
-                <input type="text" class="form-control" id="address" required [(ngModel)]="currentEvent.eventPosition.place"
-                    name="address" #address="ngModel">
+                <input type="text" class="form-control" id="address" required
+                    [(ngModel)]="currentEvent.eventPosition.place" name="address" #address="ngModel">
                 <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
                     Address is required
                 </div>
@@ -22,8 +22,8 @@
 
             <div class="form-group">
                 <label for="name">Опис ситуації <span style="color: red;">*</span></label>
-                <input type="text" class="form-control" id="desc" required [(ngModel)]="currentEvent.description" name="desc"
-                    #desc="ngModel">
+                <input type="text" class="form-control" id="desc" required [(ngModel)]="currentEvent.description"
+                    name="desc" #desc="ngModel">
                 <div [hidden]="desc.valid || desc.pristine" class="alert alert-danger">
                     Description is required
                 </div>
@@ -36,7 +36,7 @@
             </div>
             <div class="form-group">
                 <label for="name">Кількісь померлих осіб</label>
-                <input type="number" min="0" class="form-control" id="deaths"  [(ngModel)]="currentEvent.deaths"
+                <input type="number" min="0" class="form-control" id="deaths" [(ngModel)]="currentEvent.deaths"
                     name="deaths" #deaths="ngModel">
             </div>
             <div class="form-group">
@@ -50,22 +50,23 @@
                     name="costs" #costs="ngModel">
             </div>
             <div class="form-group">
-                 <label for="name">Дата НС <span style="color: red;">*</span></label>
-               <!-- <input type="text" class="form-control" id="address" required [(ngModel)]="currentEvent.address"
+                <label for="name">Дата НС <span style="color: red;">*</span></label>
+                <!-- <input type="text" class="form-control" id="address" required [(ngModel)]="currentEvent.address"
                     name="address" #address="ngModel">
                 <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
                     Address is required
                 </div> -->
                 <div class="input-group">
-                    <input class="form-control" id="date" placeholder="yyyy-mm-dd"
-                           name="date" [(ngModel)]="currentEventDate" required ngbDatepicker #date="ngbDatepicker">
+                    <input class="form-control" id="date" placeholder="yyyy-mm-dd" name="date"
+                        [(ngModel)]="currentEventDate" required ngbDatepicker #date="ngbDatepicker">
                     <div class="input-group-append">
-                      <button class="btn btn-outline-secondary calendar" (click)="date.toggle()" type="button"></button>
+                        <button class="btn btn-outline-secondary calendar" (click)="date.toggle()"
+                            type="button"></button>
                     </div>
-                  </div>
+                </div>
             </div>
             <div class="form-group">
-                 <label for="name">Характер НС <span style="color: red;">*</span></label>
+                <label for="name">Характер НС <span style="color: red;">*</span></label>
                 <!--<input type="text" class="form-control" id="address" required [(ngModel)]="newcurrentEventMarker.address"
                     name="address" #address="ngModel">
                 <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
@@ -73,13 +74,13 @@
                 </div> -->
 
                 <select class="form-control" id="emergency_name" required [(ngModel)]="emergencyType"
-                name="emergency_name" #emergency_name="ngModel" >
+                    name="emergency_name" #emergency_name="ngModel">
                     <option>техногенного</option>
                     <option>природного</option>
                     <option>соціально-політичного</option>
                     <option>військового</option>
-                  </select>
-                  
+                </select>
+
                 <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
                     Address is required
                 </div>
@@ -87,13 +88,18 @@
 
             <div class="form-group">
                 <label for="name">Місце НС на карті <span style="color: red;">*</span></label>
-                
+
                 <agm-map class="marker-map" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom"
                     (mapClick)="addMarker($event.coords.lat, $event.coords.lng)">
                     <agm-marker [latitude]="newMarker.lat" [longitude]="newMarker.lng"></agm-marker>
                 </agm-map>
             </div>
-
+            <input style="display: none" type="file" accept="image/png" (change)="onFileChanged($event)" #fileInput>
+            <button type="button" class="btn btn-secondary" (click)="fileInput.click()">Select File</button>
+            <!-- <button type="button" class="btn btn-secondary" (click)="onUpload()">Upload!</button> -->
+            <ng-container *ngFor="let file of selectedFiles">
+               <p> {{file.name}} <span (click)=removeSelectedFile(file)> x </span></p>
+            </ng-container>
             <button type="submit" class="form__button"
                 [disabled]="!newMarkerForm.form.valid || newMarker.lat === 0">Submit</button>
 

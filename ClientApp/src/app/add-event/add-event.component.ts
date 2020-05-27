@@ -6,6 +6,7 @@ import { EMERGENCY_FE_NAME_TO_ID, EMERGENCY_FE_ID_TA_NAME } from '../shared/mode
 import { EventService } from '../shared/services/event.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators'
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-event',
@@ -17,7 +18,8 @@ export class AddEventComponent implements OnInit {
   constructor( private ngbDateParserFormatter: NgbDateParserFormatter,
     private eventService: EventService,
     private activatedRoute: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private http: HttpClient) { }
     isExistedEvent: boolean = false;
 
   newMarker: Marker;
@@ -27,6 +29,7 @@ export class AddEventComponent implements OnInit {
   zoom: number;
   currentEventDate: NgbDate;
   emergencyType: string;
+  selectedFiles: {name: string, data: string}[] = []
 
   ngOnInit() {
     this.newMarker = new Marker();
@@ -44,6 +47,9 @@ export class AddEventComponent implements OnInit {
         this.setCurrentEvent(window.history.state.existedEvent);
         this.isExistedEvent = true
       }
+
+      this.currentEvent.imageByteArrayList = this.currentEvent.imageByteArrayList || [];
+    
   }
 
   setCurrentEvent(event: Event){
@@ -60,6 +66,34 @@ export class AddEventComponent implements OnInit {
     console.log(this.newMarker)
   }
 
+  selectedFile: File
+
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0];
+    console.log(event)
+    this.onUpload()
+  }
+
+  onUpload() {
+    console.log(this.selectedFile)
+
+    var reader = new FileReader();
+    let thiss = this
+    reader.onload = function () {
+      console.log(reader.result);
+      thiss.selectedFiles.push({name: thiss.selectedFile.name, data: <string> reader.result})
+    }
+
+    reader.readAsDataURL(this.selectedFile);
+  }
+  removeSelectedFile(file){
+    const index = this.selectedFiles.indexOf(file);
+    if(index > -1){
+      this.selectedFiles.splice(index, 1);
+    }
+  }
+
+
   onSubmited() {
     this.currentEvent.harmed = (this.currentEvent.harmed && this.currentEvent.harmed > 0 ) ? this.currentEvent.harmed : 0;
     this.currentEvent.deaths = (this.currentEvent.deaths && this.currentEvent.deaths > 0 ) ? this.currentEvent.deaths : 0;
@@ -72,7 +106,8 @@ export class AddEventComponent implements OnInit {
     this.currentEvent.eventPosition.x = this.newMarker.lat
     this.currentEvent.eventPosition.y = this.newMarker.lng
     console.log(this.newMarker, this.currentEvent);
-
+    this.currentEvent.imageByteArrayList = this.selectedFiles.map(file => file.data)
+    console.log(this.currentEvent.imageByteArrayList)
     this.currentEvent.emergency = null;
     this.eventService.modifyEvent(this.currentEvent, this.isExistedEvent);
     this.router.navigate(["/map"])

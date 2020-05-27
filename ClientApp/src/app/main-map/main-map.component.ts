@@ -72,7 +72,7 @@ export class MainMapComponent implements OnInit, OnDestroy {
   private setInitMarkers() {
     this.eventService.events.subscribe(events => {
       this.events = events;
-      this.markers = events.map((event) => { return <Marker>{ lat: event.eventPosition.x, lng: event.eventPosition.y, name: event.eventName, address: event.eventPosition.place, desc: event.description, eventId: event.eventId } });
+      this.markers = events.filter(event => event.eventPosition).map((event) => { return <Marker>{ lat: event.eventPosition.x, lng: event.eventPosition.y, name: event.eventName, address: event.eventPosition.place, desc: event.description, eventId: event.eventId } });
       console.log(this.markers, this.events)
     });
 

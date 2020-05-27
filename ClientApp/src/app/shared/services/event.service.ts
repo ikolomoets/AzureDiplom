@@ -52,10 +52,10 @@ export class EventService {
     modifyEvent(event: Event, isExist: boolean): void {
         console.log(event)
 
-        let headers = new HttpHeaders();
-        headers = headers.append('Content-Type', 'application/json-patch+json');
+        // let headers = new HttpHeaders();
+        // headers = headers.append('Content-Type', 'application/json-patch+json');
         let authToken = localStorage.getItem('auth_token');
-        headers = headers.set('Authorization', `Bearer ${authToken}`);
+        // headers = headers.set('Authorization', `Bearer ${authToken}`);
         this.httpOptions.headers = this.httpOptions.headers.append('Authorization', `Bearer ${authToken}`);
 
         if(isExist){
