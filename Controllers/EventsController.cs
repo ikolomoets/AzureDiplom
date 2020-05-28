@@ -7,6 +7,9 @@ using Diplom.Services;
 using System;
 using Microsoft.AspNetCore.Authorization;
 using Diplom.ViewModels;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Diplom.Controllers
 {
@@ -63,32 +66,67 @@ namespace Diplom.Controllers
             return await _eventService.DatesListAsync();
         }
 
-        [Authorize]
-        // PUT: api/update/Event
         [HttpPut("update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> UpdateEventAsync([FromBody] EventDTO eventDTO)
+        public async Task<ActionResult> UpdateEventAsync([FromBody] JObject jEventDTO)
         {
-            var result = await _eventService.UpdateEventAsync(eventDTO);
+            JsonSerializer serializer = new JsonSerializer();
+            EventDTO eventDTO = (EventDTO)serializer.Deserialize(new JTokenReader(jEventDTO), typeof(EventDTO));
+            try
+            {
+                var result = await _eventService.UpdateEventAsync(eventDTO);
 
-            if (!result.Success)
-                return BadRequest(result.Message);
+                if (!result.Success)
+                    return BadRequest(result.Message);
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
 
             return Ok();
         }
 
-        // POST: api/add/Event
-        [Authorize]
-        [HttpPost("add")]
+        // POST: api/Event/add
+        [HttpPost("add"), DisableRequestSizeLimit]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> AddEventAsync([FromBody] EventDTO eventDTO)
+        public async Task<ActionResult> AddEventAsync([FromBody] JObject jEventDTO)
         {
-            var result = await _eventService.AddEventAsync(eventDTO);
+            JsonSerializer serializer = new JsonSerializer();
+            EventDTO eventDTO = (EventDTO)serializer.Deserialize(new JTokenReader(jEventDTO), typeof(EventDTO));
+            try
+            {
+                var result = await _eventService.AddEventAsync(eventDTO);
 
-            if (!result.Success)
-                return BadRequest(result.Message);
+                if (!result.Success)
+                    return BadRequest(result.Message);
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
 
             return Ok();
         }
+
+
+
+        //[HttpPost("add-event-img")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public async Task<ActionResult> ImageAsync([FromBody] JObject jEventDTO)
+        //{
+        //    JsonSerializer serializer = new JsonSerializer();
+        //    EventDTO eventDTO = (EventDTO)serializer.Deserialize(new JTokenReader(jEventDTO), typeof(EventDTO));
+
+        //    var result = await _eventService.AddEventAsync(eventDTO);
+
+        //    if (!result.Success)
+        //        return BadRequest(result.Message);
+
+
+        //    return Ok();
+        //}
     }
 }

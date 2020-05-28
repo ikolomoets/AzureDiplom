@@ -67,6 +67,7 @@ namespace Diplom
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new ViewModelToEntityMappingProfile());
+                mc.AddProfile(new EventProfile());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();

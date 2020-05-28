@@ -7,7 +7,7 @@ namespace Diplom.ViewModels.Mappings
     {
         public EventProfile()
         {
-            CreateMap<Event, EventDTO>().ReverseMap();
+            CreateMap<EventDTO,Event >();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Diplom.DataModels;
 using Diplom.ViewModels.Validations;
+using Microsoft.AspNetCore.Http;
 using ServiceStack.FluentValidation.Attributes;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace Diplom.ViewModels
         public double? Losses { get; set; }
         public double? Costs { get; set; }
         public DateTime? Date { get; set; }
-        public List<byte[]> ImageByteArrayList { get; set; }
+        public List<string> ImageByteArrayList { get; set; }
 
         public EventPosition EventPosition { get; set; }
 

@@ -44,6 +44,25 @@ namespace Diplom.Repositories
             }
         }
 
+        public async Task RemoveImages(Event @event)
+        {
+            var container = _client.GetContainerReference(Constants.BlobContainerName);
+
+            foreach (var fullPath in @event.ImageData.Split(Constants.Delimiter))
+            {
+                var blob = container.GetBlobReference(Path.GetFileName(fullPath));
+
+                var isExist = await blob.ExistsAsync();
+
+                if (!isExist)
+                {
+                    continue;
+                }
+
+                await blob.DeleteIfExistsAsync();
+            }
+        }
+
         public async Task UploadBlobs(Event @event, List<byte[]> blobs)
         {
             var container = _client.GetContainerReference(Constants.BlobContainerName);
@@ -52,7 +71,7 @@ namespace Diplom.Repositories
 
             foreach (var blob in blobs)
             {
-                var blobName = Guid.NewGuid().ToString();
+                var blobName = Guid.NewGuid().ToString().ToLower() + ".png";
 
                 var uploadBlob = container.GetBlockBlobReference(blobName);
 

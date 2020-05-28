@@ -7,6 +7,7 @@ using ServiceStack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Diplom.Services
@@ -25,13 +26,11 @@ namespace Diplom.Services
             _contentProvider = contentProvider;
         }
 
-        public async Task<AddEventResponse> AddEventAsync(EventDTO eventViewModel)
+        public async Task<AddEventResponse> AddEventAsync(EventDTO eventDTO)
         {
-            var blobs = eventViewModel.ImageByteArrayList;
+            var blobs = eventDTO.ImageByteArrayList.Select(bl => Convert.FromBase64String(Regex.Match(bl, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value)).ToList();
 
-            var @event = _mapper.Map<EventDTO, Event>(eventViewModel);
-
-            await _contentProvider.RemoveByFullPath(@event.ImageData.Split(Constants.Delimiter).ToList());
+            var @event = _mapper.Map<EventDTO, Event>(eventDTO);
             await _contentProvider.UploadBlobs(@event, blobs);
 
             return await _eventRepository.AddEventAsync(@event);
@@ -69,11 +68,10 @@ namespace Diplom.Services
 
         public async Task<UpdateEventResponse> UpdateEventAsync(EventDTO eventDTO)
         {
-            var blobs = eventDTO.ImageByteArrayList;
+            var blobs = eventDTO.ImageByteArrayList.Select(bl => Convert.FromBase64String(Regex.Match(bl, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value)).ToList();
 
             var @event = _mapper.Map<EventDTO, Event>(eventDTO);
-
-            await _contentProvider.RemoveByFullPath(@event.ImageData.Split(Constants.Delimiter).ToList());
+            await _contentProvider.RemoveImages(_eventRepository.ListAsync(@event.EventId).Result.FirstOrDefault());
             await _contentProvider.UploadBlobs(@event, blobs);
 
             return await _eventRepository.UpdateEventAsync(@event);

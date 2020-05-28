@@ -10,5 +10,6 @@ namespace Diplom.Repositories
     {
         Task RemoveByFullPath(List<string> pathList);
         Task UploadBlobs (Event @event, List<byte[]> blobs);
+        Task RemoveImages(Event @event);
     }
 }

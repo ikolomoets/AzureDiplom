@@ -4,7 +4,7 @@
     {
         public const string DiplomDatabaseConnectionStringName = "DiplomDatabaseContext";
         public const string BlobStorageConnectionStringName = "BlobConnectionString";
-        public const string BlobContainerName = "Images";
+        public const string BlobContainerName = "images";
 
         public const char Delimiter = '|';
 
