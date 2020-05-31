@@ -11,6 +11,7 @@ export class Event{
     public costs?: number;
     public date?: string
     public imageByteArrayList?: string[];
+    public imageData: string;
     public eventPosition: EventPosition;
     public emergency?: Emergency;
     public emergencyId: number;

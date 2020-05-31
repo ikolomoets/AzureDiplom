@@ -45,7 +45,6 @@ export class MainMapComponent implements OnInit, OnDestroy {
     this.latitude = 49.045639;
     this.longitude = 31.159608;
     this.zoom = 6;
-    this.setInitMarkers();
 
     this.slides = [
       { img: "assets/images/911e2ef3-874e-4cc9-8421-9b64ec16d8f2.png" },
@@ -60,6 +59,8 @@ export class MainMapComponent implements OnInit, OnDestroy {
       // { img: "assets/images/457866ee-9836-11ea-bb37-0242ac130002.png" },
       // { img: "assets/images/ea7303da-9835-11ea-bb37-0242ac130002.png" }
     ];
+    this.setInitMarkers();
+
 
   }
 
@@ -72,7 +73,14 @@ export class MainMapComponent implements OnInit, OnDestroy {
   private setInitMarkers() {
     this.eventService.events.subscribe(events => {
       this.events = events;
-      this.markers = events.filter(event => event.eventPosition).map((event) => { return <Marker>{ lat: event.eventPosition.x, lng: event.eventPosition.y, name: event.eventName, address: event.eventPosition.place, desc: event.description, eventId: event.eventId } });
+      this.markers = events.filter(event => event.eventPosition).map((event) => {
+        if(event.imageData){
+          const images = event.imageData.split("|");
+          console.log(images);
+          images.forEach(img => this.slides.push({img: img}))
+        }
+
+         return <Marker>{ lat: event.eventPosition.x, lng: event.eventPosition.y, name: event.eventName, address: event.eventPosition.place, desc: event.description, eventId: event.eventId } });
       console.log(this.markers, this.events)
     });
 
