@@ -48,6 +48,11 @@ namespace Diplom.Repositories
         {
             var container = _client.GetContainerReference(Constants.BlobContainerName);
 
+            if (String.IsNullOrEmpty(@event.ImageData))
+            {
+                return;
+            }
+
             foreach (var fullPath in @event.ImageData.Split(Constants.Delimiter))
             {
                 var blob = container.GetBlobReference(Path.GetFileName(fullPath));
