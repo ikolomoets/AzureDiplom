@@ -53,15 +53,13 @@
         </div>
     </div>
 
-    <div *ngIf="slides && slides.length > 0" class="slider-block">
-        <div class="slider-block__init">
-            <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig"
-                (init)="slickInit($event)" (breakpoint)="breakpoint($event)" (afterChange)="afterChange($event)"
-                (beforeChange)="beforeChange($event)">
-                <div ngxSlickItem *ngFor="let slide of slides" class="slide">
+    <div *ngIf="currentMarker && currentMarker.slides && currentMarker.slides.length > 0" class="slider-block">
+        <div class="slider-block__init row justify-content-around">
+            <!-- <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig"> -->
+                <div  *ngFor="let slide of currentMarker.slides" class="slide">
                     <img src="{{ slide.img }}" alt="no emergency photo" width="100%">
                 </div>
-            </ngx-slick-carousel>
+            <!-- </ngx-slick-carousel> -->
         </div>
     </div>
 </div>

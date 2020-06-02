@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Marker } from '../shared/models/Marker';
 import { EventService } from '../shared/services/event.service';
 import { Event } from '../shared/models/event';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { UserService } from '../shared/services/user.service';
 import { Router } from '@angular/router';
 
@@ -25,7 +25,7 @@ export class MainMapComponent implements OnInit, OnDestroy {
   zoom: number;
   markers: Marker[];
   currentMarker: Marker;
-  slides: { img: string }[] = []
+  slides: { img: string }[][] = [];
     events: Event[]
   events$: Observable<Event[]>;
   @Input()
@@ -46,19 +46,19 @@ export class MainMapComponent implements OnInit, OnDestroy {
     this.longitude = 31.159608;
     this.zoom = 6;
 
-    this.slides = [
-      { img: "assets/images/911e2ef3-874e-4cc9-8421-9b64ec16d8f2.png" },
-      { img: "assets/images/421f7538-d3d7-43e0-baad-6c868a90a62a.png" },
-      { img: "assets/images/ea7303da-9835-11ea-bb37-0242ac130002.png" },
-      { img: "assets/images/f54c19a4-9835-11ea-bb37-0242ac130002.png" },
-      { img: "assets/images/01157c80-9836-11ea-bb37-0242ac130002.png" },
+    // this.slides = [
+    //   { img: "assets/images/911e2ef3-874e-4cc9-8421-9b64ec16d8f2.png" },
+    //   { img: "assets/images/421f7538-d3d7-43e0-baad-6c868a90a62a.png" },
+    //   { img: "assets/images/ea7303da-9835-11ea-bb37-0242ac130002.png" },
+    //   { img: "assets/images/f54c19a4-9835-11ea-bb37-0242ac130002.png" },
+    //   { img: "assets/images/01157c80-9836-11ea-bb37-0242ac130002.png" },
       // { img: "assets/images/09ac9dc4-9836-11ea-bb37-0242ac130002.png" },
       // { img: "assets/images/23e2161a-9836-11ea-bb37-0242ac130002.png" },
       // { img: "assets/images/25a4f9c2-9836-11ea-bb37-0242ac130002.png" },
       // { img: "assets/images/3099b250-9836-11ea-bb37-0242ac130002.png" },
       // { img: "assets/images/457866ee-9836-11ea-bb37-0242ac130002.png" },
       // { img: "assets/images/ea7303da-9835-11ea-bb37-0242ac130002.png" }
-    ];
+    // ];
     this.setInitMarkers();
 
 
@@ -74,13 +74,13 @@ export class MainMapComponent implements OnInit, OnDestroy {
     this.eventService.events.subscribe(events => {
       this.events = events;
       this.markers = events.filter(event => event.eventPosition).map((event) => {
+        let slides = [];
         if(event.imageData){
           const images = event.imageData.split("|");
           console.log(images);
-          images.forEach(img => this.slides.push({img: img}))
+          images.forEach(img => slides.push({img: img}))
         }
-
-         return <Marker>{ lat: event.eventPosition.x, lng: event.eventPosition.y, name: event.eventName, address: event.eventPosition.place, desc: event.description, eventId: event.eventId } });
+         return <Marker>{ lat: event.eventPosition.x, lng: event.eventPosition.y, name: event.eventName, address: event.eventPosition.place, desc: event.description, eventId: event.eventId, slides: slides } });
       console.log(this.markers, this.events)
     });
 
@@ -94,20 +94,21 @@ export class MainMapComponent implements OnInit, OnDestroy {
   }
 
   selectMarker(marker: Marker) {
-    this.currentMarker = marker
-    
+  
+    this.currentMarker = marker;
+    console.log(this.currentMarker)
     // console.log(this.currentMarker, this.events.find(event => event.eventId == this.currentMarker.eventId))
   }
 
   slideConfig = {
     slidesToScroll: 3,
-    slidesToShow: 5,
+    slidesToShow: 4,
     responsive: [
       {
         breakpoint: 1220,
         settings: {
-          slidesToScroll: 3,
-          slidesToShow: 4
+          slidesToScroll: 2,
+          slidesToShow: 3
         }
       },
       {
@@ -142,21 +143,21 @@ export class MainMapComponent implements OnInit, OnDestroy {
   //   this.slides.length = this.slides.length - 1;
   // }
 
-  // slickInit(e) {
-  //   console.log('slick initialized');
-  // }
+  slickInit(e) {
+    console.log('slick initialized');
+  }
 
-  // breakpoint(e) {
-  //   console.log('breakpoint');
-  // }
+  breakpoint(e) {
+    console.log('breakpoint');
+  }
 
-  // afterChange(e) {
-  //   console.log('afterChange');
-  // }
+  afterChange(e) {
+    console.log('afterChange');
+  }
 
-  // beforeChange(e) {
-  //   console.log('beforeChange');
-  // }
+  beforeChange(e) {
+    console.log('beforeChange');
+  }
 
 
 }
