@@ -41,6 +41,11 @@ namespace Diplom.Services
             return await _eventRepository.DatesListAsync();
         }
 
+        public async Task<DeleteEventResponse> DeleteAsync(int eventId)
+        {
+            return await _eventRepository.DeleteAsync(eventId);
+        }
+
         public async Task<IEnumerable<Event>> ListAsync()
         {
             return await _eventRepository.ListAsync();

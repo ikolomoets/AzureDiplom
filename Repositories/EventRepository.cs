@@ -32,6 +32,23 @@ namespace Diplom.Repositories
         {
             return _context.Events.Select(e => e.Date.Value.Year).Distinct().Select(d => new Nullable<DateTime>(new DateTime(d, 1, 1))).ToListAsync();
         }
+
+        public async Task<DeleteEventResponse> DeleteAsync(int eventId)
+        {
+            try
+            {
+                var @event =_context.Events.Find(eventId);
+                _context.Events.Remove(@event);
+                await _context.SaveChangesAsync();
+
+                return new DeleteEventResponse();
+            }
+            catch (Exception ex)
+            {
+                return new DeleteEventResponse(false, $"An error occurred when deleting event: {ex.Message}");
+            }
+        }
+
         public async Task<IEnumerable<Event>> ListAsync()
         {
             return await _context.Events.Include(e => e.EventPosition).ToListAsync();

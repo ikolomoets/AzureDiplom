@@ -111,7 +111,17 @@ namespace Diplom.Controllers
             return Ok();
         }
 
+        // POST: api/Event/delete
+        [HttpPost("delete"), ActionName("Delete")]
+        public async Task<IActionResult> Delete(int eventId)
+        {
+            var result = await _eventService.DeleteAsync(eventId);
 
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            return Ok();
+        }
 
         //[HttpPost("add-event-img")]
         //[ProducesResponseType(StatusCodes.Status200OK)]
