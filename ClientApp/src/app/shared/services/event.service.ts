@@ -66,6 +66,7 @@ export class EventService {
             .subscribe(data => {
                 console.log(data) 
                 this.router.navigate(["/map"])
+                this.getAllEvents();
             },
             error => alert(error.error));
         } else{
@@ -73,6 +74,7 @@ export class EventService {
             .subscribe(data => {
                 console.log(data) 
                 this.router.navigate(["/map"])
+                this.getAllEvents();
             },
             error => alert(error.error));
 
