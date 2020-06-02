@@ -34,7 +34,7 @@ function getEmergencyFENameToIdMap():Map<string, number>{
     name2id.set("ТЕХНОГЕННОГО", 1)
     name2id.set("ПРИРОДНОГО", 2)
     name2id.set("СОЦІАЛЬНО-ПОЛІТИЧНОГО", 3)
-    name2id.set("ВІЙСЬКОВОГО", 4)
+    name2id.set("ВОЄННОГО", 4)
     return name2id;
 }
 
@@ -43,7 +43,7 @@ function getEmergencyFEIdToNameMap():Map<number, string>{
     id2name.set(1, "ТЕХНОГЕННОГО")
     id2name.set(2, "ПРИРОДНОГО")
     id2name.set(3, "СОЦІАЛЬНО-ПОЛІТИЧНОГО")
-    id2name.set(4, "ВІЙСЬКОВОГО")
+    id2name.set(4, "ВОЄННОГО")
     return id2name;
 }
 
