@@ -1,0 +1,104 @@
+<div class="col-md-8 login-form-center">
+    <div class="card">
+        <form (ngSubmit)="onSubmited()" #newMarkerForm="ngForm">
+            <h3>Розрахунок збитків від втрати життя та здоров'я населення</h3>
+            <div class="calc-block">
+                <div class="form-group">
+                    <label for="name">Кількість працівників з втратою працездатності до 9 днів</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="lifeAndHealth.Nml" name="name"
+                        #name="ngModel">
+
+                </div>
+                <div class="form-group">
+                    <label for="name">Кількість працівників з втратою працездатності понад 9 днів</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="lifeAndHealth.Nmt" name="name"
+                        #name="ngModel">
+
+                </div>
+                <div class="form-group">
+                    <label for="name">Кількість працівників з отриманою інфвалідністю та втратою працездатності понад 11
+                        років</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="lifeAndHealth.Nmi" name="name"
+                        #name="ngModel">
+
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Загальна кількість загиблих</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="lifeAndHealth.Nmdp" name="name"
+                        #name="ngModel">
+                </div>
+                <div class="form-group">
+                    <label for="name">Кількість загиблих до 16 років</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="lifeAndHealth.Nmz16" name="name"
+                        #name="ngModel">
+
+                </div>
+                <div class="form-group">
+                    <label for="name">Кількість загиблих від 16 до 60 років</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="lifeAndHealth.Nmz60" name="name"
+                        #name="ngModel">
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Середній вік дітей, що залишились без годувальника</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="lifeAndHealth.AvgVD" name="name"
+                        #name="ngModel">
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Кількість дітей, що залишились без годувальника</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="lifeAndHealth.Nmvtg" name="name"
+                        #name="ngModel">
+                </div>
+                <h4>{{lifeAndHealthRes.Hr}} тис. грн.</h4>
+                <br>
+                <br>
+                <h3>Розрахунок збитків від руйнування та пошкодження основних фондів, знищення майна та продукції</h3>
+                <div class="form-group">
+                    <label for="name">Збитки від руйнування та пошкодження основних фондів виробничого призначення</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="destruction.Fv" name="name"
+                        #name="ngModel">
+
+                </div>
+                <div class="form-group">
+                    <label for="name">Збитки від руйнування та пошкодження основних фондів невиробничого призначення</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="destruction.Fg" name="name"
+                        #name="ngModel">
+
+                </div>
+                <div class="form-group">
+                    <label for="name">Збитки від втрат готової промислової та сільськогосподарської продукції</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="destruction.Pr" name="name"
+                        #name="ngModel">
+
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Збитки від втрат незібраної сільськогосподарської продукції</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="destruction.Prs" name="name"
+                        #name="ngModel">
+                </div>
+                <div class="form-group">
+                    <label for="name">Збитки від втрат запасів сировини, напівфабрикатів та проміжної продукції</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="destruction.Sn" name="name"
+                        #name="ngModel">
+
+                </div>
+                <div class="form-group">
+                    <label for="name">Збитки від втрат майна громадян та організацій</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="destruction.Mdg" name="name"
+                        #name="ngModel">
+                </div>
+
+                <h4>{{destructionRes}} тис. грн.</h4>
+
+                <h3>{{overallRes}} тис. грн.</h3>
+
+            </div>
+
+            <button type="submit" class="form__button">Підрахувати</button>
+
+        </form>
+    </div>
+</div>

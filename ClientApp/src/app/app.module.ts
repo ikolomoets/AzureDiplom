@@ -19,6 +19,7 @@ import { TabsModule } from './shared/tabs/tabs.module';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthGuard } from './auth.guard';
+import { CalcLossComponent } from './calc-loss/calc-loss.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AuthGuard } from './auth.guard';
     HomeComponent,
     HeaderComponent,
     MainMapComponent,
-    AddEventComponent
+    AddEventComponent,
+    CalcLossComponent
   ],
   imports: [
     AccountModule,
@@ -46,6 +48,7 @@ import { AuthGuard } from './auth.guard';
       { path: 'home', component: HomeComponent },
       { path: 'map', component: MainMapComponent },
       { path: 'add-event', component: AddEventComponent},
+      { path: 'calc-loss', component: CalcLossComponent },
 
       { path: 'account', loadChildren: './account/account.module#AccountModule' },
       { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
