@@ -76,13 +76,14 @@ export class CalcLossComponent implements OnInit {
 
 
   onSubmited() {
-    this.lifeAndHealthRes.Vtrr = +this.lifeAndHealth.Nml || 0 * 0.28 + this.lifeAndHealth.Nmt||0 * 6.5 + this.lifeAndHealth.Nmi||0 * 37 + this.lifeAndHealth.Nmz16||0 * 22 + this.lifeAndHealth.Nmz60||0 * 47; 
-    this.lifeAndHealthRes.Vdp = +this.lifeAndHealth.Nmdp||0 * 0.15;
-    this.lifeAndHealthRes.Vvtg = 12 * 0.037 * (18 - this.lifeAndHealth.AvgVD||0) * this.lifeAndHealth.Nmvtg||0;
-    this.lifeAndHealthRes.Hr = +this.lifeAndHealthRes.Vtrr||0 + this.lifeAndHealthRes.Vdp||0 + this.lifeAndHealthRes.Vvtg||0;
+    this.lifeAndHealthRes.Vtrr = + (this.lifeAndHealth.Nml || 0) * 0.28 + (this.lifeAndHealth.Nmt||0) * 6.5 + (this.lifeAndHealth.Nmi||0) * 37 + (this.lifeAndHealth.Nmz16||0) * 22 + (this.lifeAndHealth.Nmz60||0) * 47;
+    
+    this.lifeAndHealthRes.Vdp = +(this.lifeAndHealth.Nmdp||0) * 0.15;
+    this.lifeAndHealthRes.Vvtg = 12 * 0.037 * (18 - (this.lifeAndHealth.AvgVD||0)) * (this.lifeAndHealth.Nmvtg||0);
+    this.lifeAndHealthRes.Hr = + (this.lifeAndHealthRes.Vtrr||0) + (this.lifeAndHealthRes.Vdp||0) + (this.lifeAndHealthRes.Vvtg||0);
     console.log(this.lifeAndHealth)
     this.destructionRes = 0;
-    Object.keys(this.destruction).forEach(v => this.destructionRes += +this.destruction[v] || 0);
+    Object.keys(this.destruction).forEach(v => this.destructionRes += +(this.destruction[v] || 0));
 
     this.overallRes = +this.destructionRes + this.lifeAndHealthRes.Hr;
   }

@@ -20,6 +20,7 @@ import { TabsModule } from './shared/tabs/tabs.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthGuard } from './auth.guard';
 import { CalcLossComponent } from './calc-loss/calc-loss.component';
+import { CalcLossFireComponent } from './calc-loss_fire/calc-loss_fire.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CalcLossComponent } from './calc-loss/calc-loss.component';
     HeaderComponent,
     MainMapComponent,
     AddEventComponent,
-    CalcLossComponent
+    CalcLossComponent,
+    CalcLossFireComponent
   ],
   imports: [
     AccountModule,
@@ -49,6 +51,7 @@ import { CalcLossComponent } from './calc-loss/calc-loss.component';
       { path: 'map', component: MainMapComponent },
       { path: 'add-event', component: AddEventComponent},
       { path: 'calc-loss', component: CalcLossComponent },
+      { path: 'calc-loss_fire', component: CalcLossFireComponent },
 
       { path: 'account', loadChildren: './account/account.module#AccountModule' },
       { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },

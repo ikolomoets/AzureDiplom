@@ -1,0 +1,85 @@
+<div class="col-md-8 login-form-center">
+    <div class="card">
+        <form (ngSubmit)="onSubmited()" #newMarkerForm="ngForm">
+            <h3>Розрахунок збитків від втрати деревини та інших лісових ресурсів </h3>
+            <div class="calc-block">
+                <div class="form-group">
+                    <label for="name">Площа лісової ділянки, що вилучається або знищується, у гектарах</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="inputParams.P" name="name"
+                        #name="ngModel">
+                </div>
+                <div class="form-group">
+                    <label for="name">Область <span style="color: red;">*</span> </label>
+                    <select class="form-control" id="emergency_name" required [(ngModel)]="inputParams.obl"
+                        name="emergency_name" #emergency_name="ngModel">
+                        <option value="0">Вінницька</option>
+                        <option value="1">Волинська</option>
+                        <option value="2">Дніпропетровська</option>
+                        <option value="3">Донецька</option>
+                        <option value="4">Житомирська</option>
+                        <option value="5">Закарпатська </option>
+                        <option value="6">Закарпатська гірська частина області</option>
+                        <option value="7">Запорізька</option>
+                        <option value="8">Івано-Франківська</option>
+                        <option value="9">гірська частина області</option>
+                        <option value="10">Київська </option>
+                        <option value="11">Кіровоградська</option>
+                        <option value="12">Луганська</option>
+                        <option value="13">Львівська </option>
+                        <option value="14">Львівська гірська частина області</option>
+                        <option value="15">Миколаївська</option>
+                        <option value="16">Одеська</option>
+                        <option value="17">Полтавська</option>
+                        <option value="18">Рівненська </option>
+                        <option value="19">Сумська</option>
+                        <option value="20">Тернопільська</option>
+                        <option value="21"> Харківська</option>
+                        <option value="22">Херсонська</option>
+                        <option value="23">Хмельницька</option>
+                        <option value="24">Черкаська</option>
+                        <option value="25">Чернівецька</option>
+                        <option value="26">Чернівецька гірська частина області</option>
+                        <option value="27">Чернігівська </option>
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="name">Група лісу до НС <span style="color: red;">*</span> </label>
+                    <select class="form-control" id="emergency_name" required [(ngModel)]="inputParams.groupBefore"
+                        name="emergency_name" #emergency_name="ngModel">
+                        <option value="0">1</option>
+                        <option value="1">2</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Група лісу після НС <span style="color: red;">*</span> </label>
+                    <select class="form-control" id="emergency_name" required [(ngModel)]="inputParams.groupAfter"
+                        name="emergency_name" #emergency_name="ngModel">
+                        <option value="0">1</option>
+                        <option value="1">2</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="name">Коефіцієнт продуктивності лісів</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="inputParams.koefProd" name="name"
+                        #name="ngModel">
+                </div>
+                <div class="form-group">
+                    <label for="name">Коефіцієнт зниження продуктивності угіддя</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="inputParams.koefLostProd" name="name"
+                        #name="ngModel">
+                </div>
+
+                <h3>{{result.Plr}} тис. грн.</h3>
+
+            </div>
+
+            <button type="submit" class="form__button">Підрахувати</button>
+
+        </form>
+        <br>
+        <br>
+        <img src="assets/images/koefProd.png">
+    </div>
+</div>
